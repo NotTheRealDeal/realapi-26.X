@@ -20,7 +20,7 @@ public abstract class BundleLike<T extends StackHolder<T>> implements StackHolde
         this.index = index;
     }
 
-    public BundleLike(List<ItemStackTemplate> stacks, float scale, int index) {
+    public BundleLike(List<ItemStackTemplate> stacks, double scale, int index) {
         this(stacks, Fraction.getFraction(scale).invert(), index);
     }
 

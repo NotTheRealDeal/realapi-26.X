@@ -14,9 +14,9 @@ public class RealAPI implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
+		RealNetworking.register();
 		RealDataComponents.register();
 		RealAttributes.register();
-		RealNetworking.register();
 	}
 
 	public static Identifier id(String path) {

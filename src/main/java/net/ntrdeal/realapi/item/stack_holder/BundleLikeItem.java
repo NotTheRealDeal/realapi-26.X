@@ -203,19 +203,38 @@ public class BundleLikeItem<T extends StackHolder<T>> extends Item implements We
     }
 
     public void playRemoveSound(Entity entity) {
-        entity.playSound(SoundEvents.BUNDLE_REMOVE_ONE, 0.8f, 0.8f + entity.level().getRandom().nextFloat() * 0.4f);
+        entity.playSound(
+                SoundEvents.BUNDLE_REMOVE_ONE,
+                0.8f,
+                0.8f + entity.level().getRandom().nextFloat() * 0.4f
+        );
     }
 
     public void playInsertSound(Entity entity) {
-        entity.playSound(SoundEvents.BUNDLE_INSERT, 0.8f, 0.8f + entity.level().getRandom().nextFloat() * 0.4f);
+        entity.playSound(
+                SoundEvents.BUNDLE_INSERT,
+                0.8f,
+                0.8f + entity.level().getRandom().nextFloat() * 0.4f
+        );
     }
 
     public void playInsertFailSound(Entity entity) {
-        entity.playSound(SoundEvents.BUNDLE_INSERT_FAIL, 0.8f, 0.8f + entity.level().getRandom().nextFloat() * 0.4f);
+        entity.playSound(
+                SoundEvents.BUNDLE_INSERT_FAIL,
+                0.8f,
+                0.8f + entity.level().getRandom().nextFloat() * 0.4f
+        );
     }
 
     public void playDropContentsSound(Level level, Entity entity) {
-        level.playSound(null, entity.blockPosition(), SoundEvents.BUNDLE_DROP_CONTENTS, SoundSource.PLAYERS, 0.8f, 0.8f + entity.level().getRandom().nextFloat() * 0.4f);
+        level.playSound(
+                null,
+                entity.blockPosition(),
+                SoundEvents.BUNDLE_DROP_CONTENTS,
+                SoundSource.PLAYERS,
+                0.8f,
+                0.8f + entity.level().getRandom().nextFloat() * 0.4f
+        );
     }
 
     @Override

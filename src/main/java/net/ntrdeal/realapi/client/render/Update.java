@@ -34,7 +34,7 @@ public record Update<T>(
     public float tickDelta() {
         Entity entity = this.getOwnerEntity();
         if (this.level == null || entity == null) return 0;
-        return Minecraft.getInstance().getDeltaTracker().getGameTimeDeltaPartialTick(level.tickRateManager().isEntityFrozen(entity));
+        return Minecraft.getInstance().getDeltaTracker().getGameTimeDeltaPartialTick(this.level.tickRateManager().isEntityFrozen(entity));
     }
 
     @Nullable

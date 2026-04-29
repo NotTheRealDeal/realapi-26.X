@@ -23,6 +23,7 @@
   },
   "client": [
     "client.event.AbstractContainerScreenMixin",
+    "client.event.GuiMixin",
     "client.event.HumanoidModelMixin",
     "client.event.LocalPlayerMixin",
     "client.render.DisplayContextAccessor",

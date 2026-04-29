@@ -1,22 +1,27 @@
 package net.ntrdeal.realapi.item.stack_holder;
 
 import com.mojang.serialization.DataResult;
+import it.unimi.dsi.fastutil.objects.Reference2ObjectOpenHashMap;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemInstance;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemStackTemplate;
+import net.ntrdeal.realapi.data.DataKey;
+import net.ntrdeal.realapi.data.data_mapper.DataMapper;
 import org.apache.commons.lang3.math.Fraction;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
 
-public class HolderBuilder<T extends StackHolder<T>> implements StackHolder<T> {
+public class HolderBuilder<T extends StackHolder<T>> implements StackHolder<T>, DataMapper {
+    private final Map<DataKey<?>, Object> dataMap = new Reference2ObjectOpenHashMap<>();
     public final T holder;
     public final List<ItemStack> stacks;
     public Fraction weight;
@@ -58,6 +63,7 @@ public class HolderBuilder<T extends StackHolder<T>> implements StackHolder<T> {
     @Override public @Nullable DataResult<Fraction> overrideWeight(ItemInstance instance) {return this.holder.overrideWeight(instance);}
     @Override public DataResult<Fraction> getPerWeight(ItemInstance instance) {return this.holder.getPerWeight(instance);}
     @Override public DataResult<Fraction> getWeight(ItemInstance instance) {return this.holder.getWeight(instance);}
+    @Override public Map<DataKey<?>, Object> dataMap() {return this.dataMap;}
 
     public int getMaxAmount(Fraction weight) {
         return Math.max(Fraction.ONE.subtract(this.weight).divideBy(weight).intValue(), 0);
@@ -83,10 +89,10 @@ public class HolderBuilder<T extends StackHolder<T>> implements StackHolder<T> {
         ItemStack insertingStack = addingStack.split(adding);
 
         for (ItemStack listedStack : this.stacks.reversed()) {
-            if (insertingStack.isEmpty()) break;
+            if (insertingStack.isEmpty() || !insertingStack.isStackable()) break;
             if (listedStack.isEmpty() || !listedStack.isStackable() || !ItemStack.isSameItemSameComponents(insertingStack, listedStack)) continue;
             int shrink = Math.min(insertingStack.count(), this.maxStackSize(listedStack) - listedStack.count());
-            if (shrink == 0) continue;
+            if (shrink <= 0) continue;
             listedStack.grow(shrink);
             insertingStack.shrink(shrink);
         }

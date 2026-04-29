@@ -30,8 +30,8 @@ public abstract class PlayerMixin extends Avatar implements ContainerUser {
     }
 
     @WrapOperation(method = "causeFoodExhaustion", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/food/FoodData;addExhaustion(F)V"))
-    private void ntrdeal$appetite(FoodData data, float exhaustion, Operation<Void> original) {
-        original.call(data, exhaustion * (float) this.getAttributeValue(RealAttributes.APPETITE));
+    private void ntrdeal$appetite(FoodData data, float amount, Operation<Void> original) {
+        original.call(data, amount * (float) this.getAttributeValue(RealAttributes.APPETITE));
     }
 
     @WrapOperation(method = "blockUsingItem", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;getSecondsToDisableBlocking()F"))
