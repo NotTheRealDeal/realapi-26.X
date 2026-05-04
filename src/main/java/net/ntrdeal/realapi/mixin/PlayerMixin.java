@@ -66,7 +66,7 @@ public abstract class PlayerMixin extends Avatar implements ContainerUser, ItemP
 
         super.dropAllDeathLoot(level, source);
 
-        this.savedStacks.forEach(inventory::add);
+        this.savedStacks.forEach((slot, stack) -> inventory.add(slot, stack.copy()));
     }
 
     @Override
