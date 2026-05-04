@@ -1,5 +1,6 @@
 package net.ntrdeal.realapi.mixin;
 
+import com.google.common.collect.Maps;
 import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
@@ -8,19 +9,18 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageTypes;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Attackable;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
-import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.waypoints.WaypointTransmitter;
-import net.ntrdeal.realapi.entity.KeepOnDeath;
 import net.ntrdeal.realapi.entity.RealAttributes;
+import net.ntrdeal.realapi.tags.RealEffectTags;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -49,6 +49,18 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, Wa
                 .add(RealAttributes.DODGE_CHANCE);
     }
 
+    @WrapOperation(method = "removeAllEffects", at = @At(value = "INVOKE", target = "Lcom/google/common/collect/Maps;newHashMap(Ljava/util/Map;)Ljava/util/HashMap;"))
+    private HashMap<Holder<MobEffect>, MobEffectInstance> ntrdeal$cannotClear1(Map<Holder<MobEffect>, MobEffectInstance> map, Operation<HashMap<Holder<MobEffect>, MobEffectInstance>> original) {
+        return original.call(Maps.filterKeys(map, holder -> holder != null && !holder.is(RealEffectTags.CANNOT_CLEAR)));
+    }
+
+    @WrapOperation(method = "removeAllEffects", at = @At(value = "INVOKE", target = "Ljava/util/Map;clear()V"))
+    private void ntrdeal$cannotClear2(Map<Holder<MobEffect>, MobEffectInstance> map, Operation<Void> original) {
+        for (Holder<MobEffect> holder : map.keySet()) {
+            if (!holder.is(RealEffectTags.CANNOT_CLEAR)) map.remove(holder);
+        }
+    }
+
     @WrapOperation(method = "igniteForTicks", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;getAttributeValue(Lnet/minecraft/core/Holder;)D"))
     private double ntrdeal$fireDamageMultiplier(LivingEntity entity, Holder<Attribute> attribute, Operation<Double> original) {
         return original.call(entity, attribute) * entity.getAttributeValue(RealAttributes.FIRE_DAMAGE_MULTIPLIER);
@@ -63,25 +75,6 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, Wa
     @WrapOperation(method = "getJumpPower(F)F", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;getAttributeValue(Lnet/minecraft/core/Holder;)D"))
     private double ntrdeal$movementScaleJump(LivingEntity entity, Holder<Attribute> attribute, Operation<Double> original) {
         return original.call(entity, attribute) * entity.getAttributeValue(RealAttributes.MOVEMENT_SCALE);
-    }
-
-    @WrapMethod(method = "dropAllDeathLoot")
-    private void ntrdeal$keepOnDeath(ServerLevel level, DamageSource source, Operation<Void> original) {
-        if ((Entity)this instanceof Player player) {
-            Map<Integer, ItemStack> collectedStacks = new HashMap<>();
-            Inventory inventory = player.getInventory();
-
-            for (int slot = 0; slot < inventory.getContainerSize(); slot++) {
-                ItemStack maybe = inventory.getItem(slot);
-                if (KeepOnDeath.keepOnDeath(maybe)) {
-                    collectedStacks.put(slot, inventory.removeItem(slot, maybe.count()));
-                }
-            }
-
-            original.call(level, source);
-
-            collectedStacks.forEach(inventory::add);
-        } else original.call(level, source);
     }
 
     @WrapMethod(method = "hurtServer")

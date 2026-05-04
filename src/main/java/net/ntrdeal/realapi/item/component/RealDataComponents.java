@@ -5,7 +5,7 @@ import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.util.Unit;
 import net.ntrdeal.realapi.RealAPI;
-import net.ntrdeal.realapi.entity.KeepOnDeath;
+import net.ntrdeal.realapi.entity.event.KeepOnDeathEvent;
 
 import java.util.function.UnaryOperator;
 
@@ -18,6 +18,6 @@ public class RealDataComponents {
     }
 
     public static void register() {
-        KeepOnDeath.register();
+        KeepOnDeathEvent.register();
     }
 }

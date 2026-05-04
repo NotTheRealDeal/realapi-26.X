@@ -10,5 +10,6 @@
   "attribute.realapi.ranged_attack_multiplier": "Ranged Attack Multiplier",
   "attribute.realapi.shield_fragility": "Shield Fragility",
   "tag.attribute.realapi.dimensions_refresher": "Dimensions Refresher",
-  "tag.item.realapi.keep_on_death": "Keep On Death"
+  "tag.item.realapi.keep_on_death": "Keep On Death",
+  "tag.mob_effect.realapi.cannot_clear": "Cannot Clear"
 }

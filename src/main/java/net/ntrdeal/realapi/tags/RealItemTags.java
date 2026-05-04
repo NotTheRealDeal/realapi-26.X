@@ -4,11 +4,9 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.ntrdeal.realapi.RealAPI;
-import org.jetbrains.annotations.ApiStatus;
 
-@ApiStatus.NonExtendable
-public interface RealItemTags {
-    TagKey<Item> KEEP_ON_DEATH = bind("keep_on_death");
+public final class RealItemTags {
+    public static final TagKey<Item> KEEP_ON_DEATH = bind("keep_on_death");
 
     private static TagKey<Item> bind(final String name) {
         return TagKey.create(Registries.ITEM, RealAPI.id(name));
