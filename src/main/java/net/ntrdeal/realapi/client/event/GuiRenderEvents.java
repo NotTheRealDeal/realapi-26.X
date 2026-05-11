@@ -8,7 +8,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.resources.Identifier;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import java.util.function.Function;
 
@@ -47,7 +47,7 @@ public interface GuiRenderEvents {
 
     @FunctionalInterface
     interface ReplaceAttackIndicatorEvent {
-        @Nullable GuiRenderEvents.AttackIndicator replace(Minecraft minecraft, AttackIndicator defaultPack, Crosshair crosshair);
+        GuiRenderEvents.@Nullable AttackIndicator replace(Minecraft minecraft, AttackIndicator defaultPack, Crosshair crosshair);
     }
 
     record Crosshair(

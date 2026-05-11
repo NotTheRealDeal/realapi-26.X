@@ -10,7 +10,7 @@ import net.minecraft.world.item.ItemStackTemplate;
 import net.ntrdeal.realapi.data.DataKey;
 import net.ntrdeal.realapi.data.data_mapper.DataMapper;
 import org.apache.commons.lang3.math.Fraction;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Collections;

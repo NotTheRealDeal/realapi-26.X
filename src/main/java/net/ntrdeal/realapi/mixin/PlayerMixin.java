@@ -15,22 +15,19 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.food.FoodData;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.ntrdeal.realapi.data.mixin.ItemPerseverer;
+import net.ntrdeal.realapi.data.mixin.RealMixin;
 import net.ntrdeal.realapi.entity.RealAttributes;
 import net.ntrdeal.realapi.entity.event.KeepOnDeathEvent;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 
 import java.util.HashMap;
 import java.util.Map;
 
 @Mixin(Player.class)
-public abstract class PlayerMixin extends Avatar implements ContainerUser, ItemPerseverer {
+public abstract class PlayerMixin extends Avatar implements ContainerUser, RealMixin<Player> {
     @Shadow public abstract Inventory getInventory();
-
-    @Unique private final Map<Integer, ItemStack> savedStacks = new HashMap<>();
 
     protected PlayerMixin(EntityType<? extends LivingEntity> type, Level level) {
         super(type, level);
@@ -56,21 +53,17 @@ public abstract class PlayerMixin extends Avatar implements ContainerUser, ItemP
 
     @Override
     protected void dropAllDeathLoot(ServerLevel level, DamageSource source) {
-        this.savedStacks.clear();
+        Map<Integer, ItemStack> keptStacks = new HashMap<>();
         Inventory inventory = this.getInventory();
+        Player player = this.getThis();
 
         for (int slot = 0; slot < inventory.getContainerSize(); slot++) {
             ItemStack stack = inventory.getItem(slot);
-            if (KeepOnDeathEvent.EVENT.invoker().keepOnDeath((Player)(Avatar)this, stack)) this.savedStacks.put(slot, inventory.removeItem(slot, stack.count()));
+            if (KeepOnDeathEvent.EVENT.invoker().keepOnDeath(player, stack)) keptStacks.put(slot, inventory.removeItem(slot, stack.count()));
         }
 
         super.dropAllDeathLoot(level, source);
 
-        this.savedStacks.forEach((slot, stack) -> inventory.add(slot, stack.copy()));
-    }
-
-    @Override
-    public Map<Integer, ItemStack> savedStacks() {
-        return this.savedStacks;
+        keptStacks.forEach(inventory::add);
     }
 }

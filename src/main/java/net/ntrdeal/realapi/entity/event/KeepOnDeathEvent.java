@@ -6,11 +6,8 @@ import net.fabricmc.fabric.api.event.EventFactory;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.ntrdeal.realapi.data.mixin.ItemPerseverer;
 import net.ntrdeal.realapi.item.component.RealDataComponents;
 import net.ntrdeal.realapi.tags.RealItemTags;
-
-import java.util.Map;
 
 @FunctionalInterface
 public interface KeepOnDeathEvent {
@@ -28,9 +25,13 @@ public interface KeepOnDeathEvent {
 
         ServerPlayerEvents.COPY_FROM.register((oldPlayer, newPlayer, alive) -> {
             if (!alive) {
-                Map<Integer, ItemStack> savedStacks = ((ItemPerseverer)oldPlayer).savedStacks();
-                Inventory inventory = newPlayer.getInventory();
-                savedStacks.forEach(inventory::add);
+                Inventory oldInventory = oldPlayer.getInventory();
+                Inventory newInventory = newPlayer.getInventory();
+
+                for (int slot = 0; slot < oldInventory.getContainerSize(); slot++) {
+                    ItemStack stack = oldInventory.getItem(slot);
+                    if (EVENT.invoker().keepOnDeath(oldPlayer, stack)) newInventory.add(slot, stack);
+                }
             }
         });
     }

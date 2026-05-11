@@ -8,7 +8,7 @@ import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.ntrdeal.realapi.RealAPI;
-import net.ntrdeal.realapi.item.stack_holder.StackHolderUtils;
+import net.ntrdeal.realapi.item.component.BundleLikeData;
 
 public record BundleLikeIndexPacket(int slotIndex, int index) implements CustomPacketPayload {
     public static final Type<BundleLikeIndexPacket> TYPE = new Type<>(RealAPI.id("bundle_like_index"));
@@ -30,7 +30,7 @@ public record BundleLikeIndexPacket(int slotIndex, int index) implements CustomP
 
         if (slotIndex >= 0 && slotIndex < menu.slots.size()) {
             ItemStack stack = menu.slots.get(slotIndex).getItem();
-            StackHolderUtils.setIndex(stack, index);
+            BundleLikeData.getData(stack).ifPresent(data -> data.setIndex(stack, index));
         }
     }
 }

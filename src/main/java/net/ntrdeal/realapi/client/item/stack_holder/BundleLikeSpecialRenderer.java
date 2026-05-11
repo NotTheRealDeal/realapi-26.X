@@ -12,7 +12,7 @@ import net.minecraft.world.entity.ItemOwner;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemStackTemplate;
-import net.ntrdeal.realapi.item.stack_holder.StackHolderUtils;
+import net.ntrdeal.realapi.item.component.BundleLikeData;
 import org.joml.Matrix4fc;
 import org.jspecify.annotations.Nullable;
 
@@ -30,9 +30,10 @@ public class BundleLikeSpecialRenderer implements ItemModel {
             int seed
     ) {
         state.appendModelIdentityElement(this);
-        if (StackHolderUtils.getIndexed(stack) instanceof ItemStackTemplate template) {
-            resolver.appendItemLayers(state, template.create(), context, level, owner, seed);
-        }
+
+        BundleLikeData.getData(stack).ifPresent(data -> {
+            if (data.selected(stack) instanceof ItemStackTemplate template) resolver.appendItemLayers(state, template.create(), context, level, owner, seed);
+        });
     }
 
     @Environment(EnvType.CLIENT)

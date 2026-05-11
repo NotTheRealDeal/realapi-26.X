@@ -23,8 +23,10 @@ import net.minecraft.world.item.*;
 import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.level.Level;
 import net.ntrdeal.realapi.data.WeightHolder;
+import net.ntrdeal.realapi.item.component.BundleLikeData;
+import net.ntrdeal.realapi.item.component.RealDataComponents;
 import org.apache.commons.lang3.math.Fraction;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import java.util.Optional;
 
@@ -36,8 +38,13 @@ public class BundleLikeItem<T extends StackHolder<T>> extends Item implements We
     public final DataComponentType<T> type;
     public final T empty;
 
+    @SuppressWarnings("unchecked")
     public BundleLikeItem(Properties properties, DataComponentType<T> type, T empty) {
-        super(properties);
+        super(properties
+                .component(type, empty)
+                .stacksTo(1)
+                .component(RealDataComponents.BUNDLE_LIKE, new BundleLikeData((DataComponentType<StackHolder<?>>) type))
+        );
         this.type = type;
         this.empty = empty;
     }

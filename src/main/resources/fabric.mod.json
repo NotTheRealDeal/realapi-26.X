@@ -3,7 +3,7 @@
 	"id": "realapi",
 	"version": "${version}",
 	"name": "RealAPI",
-	"description": "This is an API for my mods!",
+	"description": "This mod has alot of code I think would be nice to develop with!",
 	"authors": [
 		"NTRDeal: Coder"
 	],
@@ -16,6 +16,9 @@
 	"entrypoints": {
 		"main": [
 			"net.ntrdeal.realapi.RealAPI"
+		],
+		"fabric-datagen-disabled": [
+			"net.ntrdeal.realapi.RealAPIDataGenerator"
 		],
 		"client": [
 			"net.ntrdeal.realapi.RealAPIClient"

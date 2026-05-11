@@ -1,7 +1,7 @@
 package net.ntrdeal.realapi.data.data_mapper;
 
 import net.ntrdeal.realapi.data.DataKey;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import java.util.Map;
 

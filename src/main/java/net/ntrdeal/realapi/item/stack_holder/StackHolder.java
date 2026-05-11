@@ -1,10 +1,8 @@
 package net.ntrdeal.realapi.item.stack_holder;
 
 import com.mojang.serialization.DataResult;
-import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.inventory.tooltip.TooltipComponent;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemInstance;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemStackTemplate;
@@ -13,7 +11,7 @@ import net.minecraft.world.item.component.BundleContents;
 import net.minecraft.world.level.block.entity.BeehiveBlockEntity;
 import net.ntrdeal.realapi.data.WeightHolder;
 import org.apache.commons.lang3.math.Fraction;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import java.util.List;
 import java.util.function.Supplier;
@@ -123,9 +121,5 @@ public interface StackHolder<T extends StackHolder<T>> extends TooltipComponent 
 
     default HolderBuilder<T> builder() {
         return new HolderBuilder<>(this.getThis());
-    }
-
-    static <T extends StackHolder<T>> void registerBundleLike(Item item, DataComponentType<T> type) {
-        StackHolderUtils.register(item, type);
     }
 }

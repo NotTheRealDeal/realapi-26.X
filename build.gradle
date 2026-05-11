@@ -1,6 +1,8 @@
 plugins {
 	id 'net.fabricmc.fabric-loom' version "${loom_version}"
+	id "com.vanniktech.maven.publish" version "${vanniktech_version}"
 	id 'maven-publish'
+	id 'signing'
 }
 
 version = project.mod_version
@@ -53,18 +55,37 @@ jar {
 	}
 }
 
-publishing {
-	publications {
-		create("mavenJava", MavenPublication) {
-			groupId = project.maven_group
-			artifactId = project.archives_base_name
-			version = project.mod_version
+signing {
+	useGpgCmd()
+}
 
-			from components.java
+mavenPublishing {
+	publishToMavenCentral(true, false)
+	signAllPublications()
+
+	coordinates(project.group, project.archives_base_name, project.version)
+
+	pom {
+		name = "RealAPI"
+		description = "This mod has alot of code I think would be nice to develop with!"
+		url = "https://github.com/NotTheRealDeal/realapi-26.1"
+		licenses {
+			license {
+				name = "MIT license"
+				url = "https://opensource.org/licenses/MIT"
+			}
 		}
-	}
-
-	repositories {
-		mavenLocal()
+		developers {
+			developer {
+				id = "nottherealdeal"
+				name = "NTRDeal"
+				url = "https://github.com/NotTheRealDeal"
+			}
+		}
+		scm {
+			url = "https://github.com/NotTheRealDeal/realapi-26.1"
+			connection = "scm:git:git://github.com/NotTheRealDeal/realapi-26.1.git"
+			developerConnection = "scm:git:ssh://git@github.com:NotTheRealDeal/realapi-26.1.git"
+		}
 	}
 }

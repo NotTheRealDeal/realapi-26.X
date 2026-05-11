@@ -4,6 +4,7 @@ import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 import net.minecraft.core.HolderLookup;
 import net.ntrdeal.realapi.entity.RealAttributes;
+import net.ntrdeal.realapi.item.component.KeepOnDeath;
 import net.ntrdeal.realapi.tags.RealAttributeTags;
 import net.ntrdeal.realapi.tags.RealEffectTags;
 import net.ntrdeal.realapi.tags.RealItemTags;
@@ -31,5 +32,7 @@ public class ModEnglishProvider extends FabricLanguageProvider {
         builder.add(RealAttributeTags.DIMENSIONS_REFRESHER, "Dimensions Refresher");
         builder.add(RealItemTags.KEEP_ON_DEATH, "Keep On Death");
         builder.add(RealEffectTags.CANNOT_CLEAR, "Cannot Clear");
+
+        builder.add(KeepOnDeath.TEXT_STRING, "Kept On Death");
     }
 }

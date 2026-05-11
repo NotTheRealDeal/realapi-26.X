@@ -13,6 +13,7 @@ public interface EntityAttributeEvents {
         }
     });
 
+    @FunctionalInterface
     interface Updated {
         void update(LivingEntity entity, Holder<Attribute> attribute);
     }
