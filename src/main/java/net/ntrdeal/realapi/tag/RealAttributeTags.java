@@ -1,4 +1,4 @@
-package net.ntrdeal.realapi.tags;
+package net.ntrdeal.realapi.tag;
 
 import net.minecraft.core.registries.Registries;
 import net.minecraft.tags.TagKey;

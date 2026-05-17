@@ -19,8 +19,9 @@ import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.waypoints.WaypointTransmitter;
+import net.ntrdeal.realapi.data.mixin.RealMixin;
 import net.ntrdeal.realapi.entity.RealAttributes;
-import net.ntrdeal.realapi.tags.RealEffectTags;
+import net.ntrdeal.realapi.tag.RealEffectTags;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -29,7 +30,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Mixin(LivingEntity.class)
-public abstract class LivingEntityMixin extends Entity implements Attackable, WaypointTransmitter {
+public abstract class LivingEntityMixin extends Entity implements Attackable, WaypointTransmitter, RealMixin<LivingEntity> {
     @Shadow public abstract boolean isBaby();
     @Shadow public abstract double getAttributeValue(Holder<Attribute> attribute);
 

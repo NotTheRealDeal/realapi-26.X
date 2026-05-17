@@ -5,9 +5,9 @@ import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 import net.minecraft.core.HolderLookup;
 import net.ntrdeal.realapi.entity.RealAttributes;
 import net.ntrdeal.realapi.item.component.KeepOnDeath;
-import net.ntrdeal.realapi.tags.RealAttributeTags;
-import net.ntrdeal.realapi.tags.RealEffectTags;
-import net.ntrdeal.realapi.tags.RealItemTags;
+import net.ntrdeal.realapi.tag.RealAttributeTags;
+import net.ntrdeal.realapi.tag.RealEffectTags;
+import net.ntrdeal.realapi.tag.RealItemTags;
 
 import java.util.concurrent.CompletableFuture;
 

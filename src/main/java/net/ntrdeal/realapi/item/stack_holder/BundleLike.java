@@ -46,9 +46,9 @@ public abstract class BundleLike<T extends StackHolder<T>> implements StackHolde
 
     @Override
     public boolean equals(Object obj) {
-        if (obj instanceof StackHolder<?> holder) {
-            return this.isEqualToHolder(holder);
-        } else return false;
+        if (this == obj) return true;
+        if (!(obj instanceof StackHolder<?> holder)) return false;
+        return this.isEqualToHolder(holder);
     }
 
     @Override

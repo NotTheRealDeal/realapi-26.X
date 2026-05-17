@@ -10,6 +10,7 @@ import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.resources.Identifier;
 import net.ntrdeal.realapi.client.event.GuiRenderEvents;
+import net.ntrdeal.realapi.data.mixin.RealMixin;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -19,7 +20,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import java.util.Objects;
 
 @Mixin(Gui.class)
-public class GuiMixin {
+public class GuiMixin implements RealMixin<Gui> {
     @Shadow @Final private Minecraft minecraft;
 
     @Unique private GuiRenderEvents.AttackIndicator attackIndicator = GuiRenderEvents.AttackIndicator.DEFAULT;

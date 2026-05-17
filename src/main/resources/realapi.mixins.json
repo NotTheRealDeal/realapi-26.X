@@ -26,7 +26,6 @@
     "client.event.GuiMixin",
     "client.event.HumanoidModelMixin",
     "client.event.LocalPlayerMixin",
-    "client.render.DisplayContextAccessor",
     "client.render.LayerRenderStateMixin"
   ]
 }

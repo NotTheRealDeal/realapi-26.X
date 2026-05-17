@@ -16,6 +16,10 @@ repositories {
 	mavenLocal()
 }
 
+loom {
+	accessWidenerPath = file("src/main/resources/realapi.classtweaker")
+}
+
 fabricApi {
 	configureDataGeneration() {
 		client = true

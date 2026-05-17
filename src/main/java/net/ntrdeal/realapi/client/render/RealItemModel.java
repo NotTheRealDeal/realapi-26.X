@@ -8,43 +8,31 @@ import net.minecraft.client.renderer.item.ItemModel;
 import net.minecraft.client.renderer.item.ItemModelResolver;
 import net.minecraft.client.renderer.item.ItemStackRenderState;
 import net.minecraft.client.resources.model.geometry.BakedQuad;
-import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.ItemOwner;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import org.jspecify.annotations.Nullable;
 
-import java.util.Collections;
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public interface RealItemModel<T> extends ItemModel {
-    RenderStateDataKey<Map<Identifier, RealItemModel<Object>>> RENDERER_KEY = RenderStateDataKey.create();
-    RenderStateDataKey<Map<Identifier, Object>> DATA_KEY = RenderStateDataKey.create();
+    RenderStateDataKey<List<RealItemModel<?>>> RENDERER_KEY = RenderStateDataKey.create();
 
     @Nullable T extractData(Update<T> extracting);
     void update(Update<T> extracted);
     void preRender(PreRender<T> preRender);
-    Identifier rendererID();
+    RenderStateDataKey<T> dataKey();
 
-    @SuppressWarnings("unchecked")
     default void useData(
             SubmitNodeCollector collector, ItemStackRenderState state, PoseStack poseStack, ItemDisplayContext displayContext,
             ItemStackRenderState.FoilType foilType, List<BakedQuad> quads, int[] tints, int light, int overlay, int outline
     ) {
         this.preRender(new PreRender<>(
-                collector,
-                state,
-                poseStack,
-                displayContext,
-                foilType,
-                quads,
-                tints,
-                light,
-                overlay,
-                outline,
-                (T) state.getDataOrDefault(DATA_KEY, Collections.emptyMap()).get(this.rendererID())
+                collector, state, poseStack,
+                displayContext, foilType, quads,
+                tints, light, overlay, outline,
+                state.getData(this.dataKey())
         ));
     }
 
@@ -56,33 +44,21 @@ public interface RealItemModel<T> extends ItemModel {
     ) {
         this.update(new Update<>(
                 resolver, state, stack, displayContext,
-                this.setData(resolver, state, stack, displayContext, level, owner, seed), level, owner, seed
+                this.setData(resolver, state, stack, displayContext, level, owner, seed),
+                level, owner, seed
         ));
     }
 
-    @SuppressWarnings("unchecked")
     default T setData(
             ItemModelResolver resolver, ItemStackRenderState state, ItemStack stack,
             ItemDisplayContext displayContext, @Nullable ClientLevel level, @Nullable ItemOwner owner, int seed
     ) {
-        Map<Identifier, RealItemModel<Object>> renderMap = state.getData(RENDERER_KEY);
-
-        if (renderMap == null) {
-            renderMap = new HashMap<>();
-            renderMap.put(this.rendererID(), (RealItemModel<Object>) this);
-            state.setData(RENDERER_KEY, renderMap);
-        } else renderMap.put(this.rendererID(), (RealItemModel<Object>) this);
+        List<RealItemModel<?>> models = state.getDataOrDefault(RENDERER_KEY, new ArrayList<>());
+        models.add(this);
+        state.setData(RENDERER_KEY, models);
 
         T data = this.extractData(new Update<>(resolver, state, stack, displayContext, null, level, owner, seed));
-
-        Map<Identifier, Object> dataMap = state.getData(DATA_KEY);
-
-        if (dataMap == null) {
-            dataMap = new HashMap<>();
-            dataMap.put(this.rendererID(), data);
-            state.setData(DATA_KEY, dataMap);
-        } dataMap.put(this.rendererID(), data);
-
+        state.setData(this.dataKey(), data);
         return data;
     }
 }

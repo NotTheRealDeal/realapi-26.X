@@ -7,7 +7,7 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.ntrdeal.realapi.item.component.RealDataComponents;
-import net.ntrdeal.realapi.tags.RealItemTags;
+import net.ntrdeal.realapi.tag.RealItemTags;
 
 @FunctionalInterface
 public interface KeepOnDeathEvent {

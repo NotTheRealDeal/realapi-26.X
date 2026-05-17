@@ -48,7 +48,7 @@ public class HolderBuilder<T extends StackHolder<T>> implements StackHolder<T>, 
     }
 
     @Override public List<ItemStackTemplate> stacks() {return Collections.emptyList();}
-    @Override public Supplier<DataResult<Fraction>> weightSupplier() {return () -> DataResult.error(() -> "This is in the builder.");}
+    @Override public Supplier<DataResult<Fraction>> weightSupplier() {return this::weight;}
     @Override public Fraction scale() {return this.holder.scale();}
     @Override public int maxStackSize(ItemInstance instance) {return this.holder.maxStackSize(instance);}
     @Override public boolean canInsert(ItemStack stack) {return this.holder.canInsert(stack);}

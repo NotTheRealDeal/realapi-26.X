@@ -9,19 +9,20 @@ import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.ntrdeal.realapi.data.mixin.RealMixin;
 import net.ntrdeal.realapi.entity.event.PlayerPickupItemEvent;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
 @Mixin(ItemEntity.class)
-public abstract class ItemEntityMixin extends Entity implements TraceableEntity {
+public abstract class ItemEntityMixin extends Entity implements TraceableEntity, RealMixin<ItemEntity> {
     public ItemEntityMixin(EntityType<?> type, Level level) {
         super(type, level);
     }
 
     @WrapOperation(method = "playerTouch", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Inventory;add(Lnet/minecraft/world/item/ItemStack;)Z"))
     private boolean ntrdeal$pickupEvent(Inventory inventory, ItemStack itemStack, Operation<Boolean> original) {
-        if (PlayerPickupItemEvent.PICKUP.invoker().pickup(inventory, (ItemEntity)(Entity) this, itemStack)) return original.call(inventory, itemStack);
+        if (PlayerPickupItemEvent.PICKUP.invoker().pickup(inventory, this.getThis(), itemStack)) return original.call(inventory, itemStack);
         else return false;
     }
 }
