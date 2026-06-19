@@ -87,9 +87,9 @@ mavenPublishing {
 			}
 		}
 		scm {
-			url = "https://github.com/NotTheRealDeal/realapi-26.1"
-			connection = "scm:git:git://github.com/NotTheRealDeal/realapi-26.1.git"
-			developerConnection = "scm:git:ssh://git@github.com:NotTheRealDeal/realapi-26.1.git"
+			url = "https://github.com/NotTheRealDeal/realapi-26.X"
+			connection = "scm:git:git://github.com/NotTheRealDeal/realapi-26.X.git"
+			developerConnection = "scm:git:ssh://git@github.com:NotTheRealDeal/realapi-26.X.git"
 		}
 	}
 }

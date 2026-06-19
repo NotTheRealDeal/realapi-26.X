@@ -1,26 +1,18 @@
 package net.ntrdeal.realapi.item.component;
 
-import net.minecraft.core.Registry;
 import net.minecraft.core.component.DataComponentType;
-import net.minecraft.core.registries.BuiltInRegistries;
-import net.ntrdeal.realapi.RealAPI;
 import net.ntrdeal.realapi.entity.event.KeepOnDeathEvent;
-
-import java.util.function.UnaryOperator;
+import net.ntrdeal.realapi.reference.RealDataComponentIds;
+import net.ntrdeal.realapi.util.RegistryUtil;
 
 public class RealDataComponents {
-    public static final DataComponentType<KeepOnDeath> KEEP_ON_DEATH = register("keep_on_death", builder ->
+    public static final DataComponentType<KeepOnDeath> KEEP_ON_DEATH = RegistryUtil.ComponentUtil.register(RealDataComponentIds.KEEP_ON_DEATH, builder ->
             builder.persistent(KeepOnDeath.CODEC).networkSynchronized(KeepOnDeath.STREAM_CODEC)
     );
 
-    public static final DataComponentType<BundleLikeData> BUNDLE_LIKE = register("bundle_like", builder ->
+    public static final DataComponentType<BundleLikeData> BUNDLE_LIKE = RegistryUtil.ComponentUtil.register(RealDataComponentIds.BUNDLE_LIKE, builder ->
             builder.persistent(BundleLikeData.CODEC).networkSynchronized(BundleLikeData.STREAM_CODEC)
     );
-
-    public static <T> DataComponentType<T> register(String name, UnaryOperator<DataComponentType.Builder<T>> builderOperator) {
-        return Registry.register(BuiltInRegistries.DATA_COMPONENT_TYPE, RealAPI.id(name),
-                builderOperator.apply(DataComponentType.builder()).build());
-    }
 
     public static void register() {
         KeepOnDeathEvent.register();

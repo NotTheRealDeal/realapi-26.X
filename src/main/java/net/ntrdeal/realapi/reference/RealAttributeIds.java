@@ -5,7 +5,7 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.ntrdeal.realapi.RealAPI;
 
-public class RealAttributeIds {
+public final class RealAttributeIds {
     public static final ResourceKey<Attribute> MOVEMENT_SCALE = create("movement_scale");
     public static final ResourceKey<Attribute> SHIELD_FRAGILITY = create("shield_fragility");
     public static final ResourceKey<Attribute> ARMOR_PENETRATION = create("armor_penetration");

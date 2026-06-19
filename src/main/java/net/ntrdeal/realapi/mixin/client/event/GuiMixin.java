@@ -6,8 +6,8 @@ import com.llamalad7.mixinextras.sugar.Local;
 import com.mojang.blaze3d.pipeline.RenderPipeline;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.gui.Hud;
 import net.minecraft.resources.Identifier;
 import net.ntrdeal.realapi.client.event.GuiRenderEvents;
 import net.ntrdeal.realapi.data.mixin.RealMixin;
@@ -19,8 +19,8 @@ import org.spongepowered.asm.mixin.injection.At;
 
 import java.util.Objects;
 
-@Mixin(Gui.class)
-public class GuiMixin implements RealMixin<Gui> {
+@Mixin(Hud.class)
+public class GuiMixin implements RealMixin<Hud> {
     @Shadow @Final private Minecraft minecraft;
 
     @Unique private GuiRenderEvents.AttackIndicator attackIndicator = GuiRenderEvents.AttackIndicator.DEFAULT;
