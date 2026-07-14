@@ -78,17 +78,21 @@ public class HolderBuilder<T extends StackHolder<T>> implements StackHolder<T>, 
     }
 
     public ItemStack tryAdd(ItemStack addingStack) {
-        if (!this.canInsert(addingStack)) return ItemStack.EMPTY;
+        return this.add(addingStack, false, false, true);
+    }
+
+    public ItemStack add(ItemStack addingStack, boolean bypassChecks, boolean topDown, boolean addFirst) {
+        if (!bypassChecks && !this.canInsert(addingStack)) return ItemStack.EMPTY;
         DataResult<Fraction> result = this.getPerWeight(addingStack);
         if (result.isError()) return ItemStack.EMPTY;
         Fraction itemWeight = result.getOrThrow();
         int adding = Math.min(this.getMaxAmount(itemWeight), addingStack.count());
         if (adding == 0) return ItemStack.EMPTY;
         this.subtractWeight(itemWeight, adding);
-        ItemStack returningStack = addingStack.copyWithCount(adding);
         ItemStack insertingStack = addingStack.split(adding);
+        ItemStack returningStack = insertingStack.copy();
 
-        for (ItemStack listedStack : this.stacks.reversed()) {
+        for (ItemStack listedStack : (topDown ? this.stacks : this.stacks.reversed())) {
             if (insertingStack.isEmpty() || !insertingStack.isStackable()) break;
             if (listedStack.isEmpty() || !listedStack.isStackable() || !ItemStack.isSameItemSameComponents(insertingStack, listedStack)) continue;
             int shrink = Math.min(insertingStack.count(), this.maxStackSize(listedStack) - listedStack.count());
@@ -99,7 +103,8 @@ public class HolderBuilder<T extends StackHolder<T>> implements StackHolder<T>, 
 
         while (!insertingStack.isEmpty()) {
             int split = Math.min(insertingStack.count(), this.maxStackSize(insertingStack));
-            this.stacks.addFirst(insertingStack.split(split));
+            if (addFirst) this.stacks.addFirst(insertingStack.split(split));
+            else this.stacks.add(insertingStack.split(split));
         }
 
         return returningStack;

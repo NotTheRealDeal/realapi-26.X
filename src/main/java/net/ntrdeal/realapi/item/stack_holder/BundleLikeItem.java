@@ -53,6 +53,7 @@ public class BundleLikeItem<T extends StackHolder<T>> extends Item implements We
     public boolean overrideStackedOnOther(ItemStack stack, Slot slot, ClickAction action, Player player) {
         T holder = stack.get(this.type);
         if (holder == null) return false;
+        Level level = player.level();
         ItemStack slotStack = slot.getItem();
         HolderBuilder<T> builder = holder.builder();
 
@@ -60,7 +61,7 @@ public class BundleLikeItem<T extends StackHolder<T>> extends Item implements We
             if (!builder.trySlotAdd(player, slot).isEmpty()) this.playInsertSound(player);
             else this.playInsertFailSound(player);
 
-            stack.set(this.type, builder.build());
+            this.setBundle(level, stack, builder.build());
             this.broadcastChanges(player);
             return true;
         } else if (action.equals(ClickAction.SECONDARY) && slotStack.isEmpty()) {
@@ -72,7 +73,7 @@ public class BundleLikeItem<T extends StackHolder<T>> extends Item implements We
                 else this.playRemoveSound(player);
             }
 
-            stack.set(this.type, builder.build());
+            this.setBundle(level, stack, builder.build());
             this.broadcastChanges(player);
             return true;
         } else return false;
@@ -80,8 +81,10 @@ public class BundleLikeItem<T extends StackHolder<T>> extends Item implements We
 
     @Override
     public boolean overrideOtherStackedOnMe(ItemStack stack, ItemStack slotStack, Slot slot, ClickAction action, Player player, SlotAccess access) {
+        Level level = player.level();
+
         if (action.equals(ClickAction.PRIMARY) && slotStack.isEmpty()) {
-            this.setIndex(stack, -1);
+            this.setIndex(level, stack, -1);
             return false;
         }
 
@@ -92,7 +95,7 @@ public class BundleLikeItem<T extends StackHolder<T>> extends Item implements We
         if (action.equals(ClickAction.PRIMARY) && !slotStack.isEmpty()) {
             if (slot.allowModification(player) && !builder.tryAdd(slotStack).isEmpty()) this.playInsertSound(player);
             else this.playInsertFailSound(player);
-            stack.set(this.type, builder.build());
+            this.setBundle(level, stack, builder.build());
             this.broadcastChanges(player);
             return true;
         } else if (action.equals(ClickAction.SECONDARY) && slotStack.isEmpty()) {
@@ -104,7 +107,7 @@ public class BundleLikeItem<T extends StackHolder<T>> extends Item implements We
                 }
             }
 
-            stack.set(this.type, builder.build());
+            this.setBundle(level, stack, builder.build());
             this.broadcastChanges(player);
             return true;
         } else return false;
@@ -169,7 +172,7 @@ public class BundleLikeItem<T extends StackHolder<T>> extends Item implements We
     public void onDestroyed(ItemEntity entity) {
         ItemStack stack = entity.getItem();
         if (stack.get(this.type) instanceof T holder) {
-            stack.set(this.type, this.empty);
+            this.setBundle(entity.level(), stack, this.empty);
             ItemUtils.onContainerDestroyed(entity, holder.stackStream());
         }
         super.onDestroyed(entity);
@@ -182,12 +185,12 @@ public class BundleLikeItem<T extends StackHolder<T>> extends Item implements We
         };
     }
 
-    public void setIndex(ItemStack stack, int index) {
+    public void setIndex(Level level, ItemStack stack, int index) {
         T holder = stack.get(this.type);
         if (holder == null) return;
         HolderBuilder<T> builder = holder.builder();
         builder.setIndex(index);
-        stack.set(this.type, builder.build());
+        this.setBundle(level, stack, builder.build());
     }
 
     public void dropItem(Level level, Player player, ItemStack stack) {
@@ -197,10 +200,14 @@ public class BundleLikeItem<T extends StackHolder<T>> extends Item implements We
         ItemStack droppedStack = builder.removeSelectedStack();
         if (droppedStack.isEmpty()) return;
         this.playRemoveSound(player);
-        stack.set(this.type, builder.build());
+        this.setBundle(level, stack, builder.build());
         player.drop(droppedStack, true);
         this.playDropContentsSound(level, player);
         player.awardStat(Stats.ITEM_USED.get(this));
+    }
+
+    public void setBundle(Level level, ItemStack stack, T bundle) {
+        stack.set(this.type, bundle);
     }
 
     public void broadcastChanges(Player player) {
