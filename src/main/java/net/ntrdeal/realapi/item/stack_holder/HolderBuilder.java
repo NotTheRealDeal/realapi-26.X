@@ -7,8 +7,8 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemInstance;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemStackTemplate;
-import net.ntrdeal.realapi.data.DataKey;
-import net.ntrdeal.realapi.data.data_mapper.DataMapper;
+import net.ntrdeal.realapi.data.data_mapper.DataKey;
+import net.ntrdeal.realapi.data.data_mapper.DataKeyMap;
 import org.apache.commons.lang3.math.Fraction;
 import org.jspecify.annotations.Nullable;
 
@@ -20,7 +20,7 @@ import java.util.function.Consumer;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
 
-public class HolderBuilder<T extends StackHolder<T>> implements StackHolder<T>, DataMapper {
+public class HolderBuilder<T extends StackHolder<T>> implements StackHolder<T>, DataKeyMap {
     private final Map<DataKey<?>, Object> dataMap = new Reference2ObjectOpenHashMap<>();
     public final T holder;
     public final List<ItemStack> stacks;

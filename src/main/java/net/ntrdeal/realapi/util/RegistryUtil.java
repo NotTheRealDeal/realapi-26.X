@@ -7,6 +7,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.references.BlockItemId;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
@@ -94,11 +95,27 @@ public class RegistryUtil {
         }
     }
 
-    public static <T> ResourceCreator<T> creator(ResourceKey<Registry<T>> registry, String namespace) {
-        return new ResourceCreator<>(registry, path -> Identifier.fromNamespaceAndPath(namespace, path));
+    public record TagCreator<T>(ResourceKey<Registry<T>> registry, Function<String, Identifier> function) {
+        public TagKey<T> create(String path) {
+            return TagKey.create(this.registry, this.function.apply(path));
+        }
     }
 
+    @Deprecated(forRemoval = true)
+    public static <T> ResourceCreator<T> creator(ResourceKey<Registry<T>> registry, String namespace) {
+        return resourceCreator(registry, path -> Identifier.fromNamespaceAndPath(namespace, path));
+    }
+
+    @Deprecated(forRemoval = true)
     public static <T> ResourceCreator<T> creator(ResourceKey<Registry<T>> registry, Function<String, Identifier> function) {
+        return resourceCreator(registry, function);
+    }
+
+    public static <T> ResourceCreator<T> resourceCreator(ResourceKey<Registry<T>> registry, Function<String, Identifier> function) {
         return new ResourceCreator<>(registry, function);
+    }
+
+    public static <T> TagCreator<T> tagCreator(ResourceKey<Registry<T>> registry, Function<String, Identifier> function) {
+        return new TagCreator<>(registry, function);
     }
 }

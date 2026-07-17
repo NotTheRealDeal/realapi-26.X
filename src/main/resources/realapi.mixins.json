@@ -5,6 +5,7 @@
   "mixins": [
     "CombatRulesMixin",
     "CrossbowItemMixin",
+    "DamageSourcesMixin",
     "EntityMixin",
     "ExperienceOrbMixin",
     "ItemStackMixin",

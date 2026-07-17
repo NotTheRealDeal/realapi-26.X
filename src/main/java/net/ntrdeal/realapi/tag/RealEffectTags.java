@@ -4,11 +4,10 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.effect.MobEffect;
 import net.ntrdeal.realapi.RealAPI;
+import net.ntrdeal.realapi.util.RegistryUtil;
 
 public final class RealEffectTags {
-    public static final TagKey<MobEffect> CANNOT_CLEAR = bind("cannot_clear");
+    private static final RegistryUtil.TagCreator<MobEffect> CREATOR = RegistryUtil.tagCreator(Registries.MOB_EFFECT, RealAPI::id);
 
-    private static TagKey<MobEffect> bind(final String name) {
-        return TagKey.create(Registries.MOB_EFFECT, RealAPI.id(name));
-    }
+    public static final TagKey<MobEffect> CANNOT_CLEAR = CREATOR.create("cannot_clear");
 }

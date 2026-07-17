@@ -4,11 +4,10 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.ntrdeal.realapi.RealAPI;
+import net.ntrdeal.realapi.util.RegistryUtil;
 
 public final class RealItemTags {
-    public static final TagKey<Item> KEEP_ON_DEATH = bind("keep_on_death");
+    private static final RegistryUtil.TagCreator<Item> CREATOR = RegistryUtil.tagCreator(Registries.ITEM, RealAPI::id);
 
-    private static TagKey<Item> bind(final String name) {
-        return TagKey.create(Registries.ITEM, RealAPI.id(name));
-    }
+    public static final TagKey<Item> KEEP_ON_DEATH = CREATOR.create("keep_on_death");
 }

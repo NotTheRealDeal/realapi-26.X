@@ -7,7 +7,7 @@ import net.ntrdeal.realapi.RealAPI;
 import net.ntrdeal.realapi.util.RegistryUtil;
 
 public final class RealAttributeIds {
-    private static final RegistryUtil.ResourceCreator<Attribute> CREATOR = RegistryUtil.creator(Registries.ATTRIBUTE, RealAPI::id);
+    private static final RegistryUtil.ResourceCreator<Attribute> CREATOR = RegistryUtil.resourceCreator(Registries.ATTRIBUTE, RealAPI::id);
 
     public static final ResourceKey<Attribute> MOVEMENT_SCALE = CREATOR.create("movement_scale");
     public static final ResourceKey<Attribute> SHIELD_FRAGILITY = CREATOR.create("shield_fragility");
