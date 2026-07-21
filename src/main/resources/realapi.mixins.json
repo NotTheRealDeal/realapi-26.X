@@ -17,17 +17,18 @@
     "event.LivingEntityMixin",
     "event.ServerPlayerMixin"
   ],
+  "client": [
+    "client.event.AbstractContainerScreenMixin",
+    "client.event.GameRendererMixin",
+    "client.event.GuiMixin",
+    "client.event.HumanoidModelMixin",
+    "client.event.LocalPlayerMixin",
+    "client.render.LayerRenderStateMixin"
+  ],
   "injectors": {
     "defaultRequire": 1
   },
   "overwrites": {
     "requireAnnotations": true
-  },
-  "client": [
-    "client.event.AbstractContainerScreenMixin",
-    "client.event.GuiMixin",
-    "client.event.HumanoidModelMixin",
-    "client.event.LocalPlayerMixin",
-    "client.render.LayerRenderStateMixin"
-  ]
+  }
 }

@@ -6,7 +6,7 @@ import net.minecraft.core.HolderLookup;
 import net.ntrdeal.realapi.entity.RealAttributes;
 import net.ntrdeal.realapi.item.component.KeepOnDeath;
 import net.ntrdeal.realapi.tag.RealAttributeTags;
-import net.ntrdeal.realapi.tag.RealEffectTags;
+import net.ntrdeal.realapi.tag.RealMobEffectTags;
 import net.ntrdeal.realapi.tag.RealItemTags;
 
 import java.util.concurrent.CompletableFuture;
@@ -31,7 +31,7 @@ public class ModEnglishProvider extends FabricLanguageProvider {
 
         builder.add(RealAttributeTags.DIMENSIONS_REFRESHER, "Dimensions Refresher");
         builder.add(RealItemTags.KEEP_ON_DEATH, "Keep On Death");
-        builder.add(RealEffectTags.CANNOT_CLEAR, "Cannot Clear");
+        builder.add(RealMobEffectTags.CANNOT_CLEAR, "Cannot Clear");
 
         builder.add(KeepOnDeath.TEXT_STRING, "Kept On Death");
     }
