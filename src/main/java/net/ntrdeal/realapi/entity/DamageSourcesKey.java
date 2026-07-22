@@ -14,7 +14,7 @@ public interface DamageSourcesKey<T> extends DataKey<T> {
 
     T create(RegistryAccess access, DamageSources sources);
 
-    default T getSources(Entity entity) {
+    default T get(Entity entity) {
         return this.get((DataKeyMap) entity.damageSources());
     }
 

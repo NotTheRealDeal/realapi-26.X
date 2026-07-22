@@ -4,10 +4,13 @@ import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.minecraft.core.Holder;
+import net.minecraft.network.protocol.game.ClientboundUpdateMobEffectPacket;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageTypes;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Attackable;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -22,10 +25,13 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 
+import java.util.Collection;
+
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin extends Entity implements Attackable, WaypointTransmitter, RealMixin<LivingEntity> {
     @Shadow public abstract boolean isBaby();
     @Shadow public abstract double getAttributeValue(Holder<Attribute> attribute);
+    @Shadow public abstract Collection<MobEffectInstance> getActiveEffects();
 
     public LivingEntityMixin(EntityType<?> type, Level level) {
         super(type, level);
@@ -41,6 +47,16 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, Wa
                 .add(RealAttributes.BANE_OF_ADOLESCENCE)
                 .add(RealAttributes.FIRE_DAMAGE_MULTIPLIER)
                 .add(RealAttributes.DODGE_CHANCE);
+    }
+
+    @WrapMethod(method = "removeAllEffects")
+    private boolean ntrdeal$syncEffects(Operation<Boolean> original) {
+        if (!original.call()) return false;
+        if (this.getActiveEffects().isEmpty() || !(this.getThis() instanceof ServerPlayer player)) return true;
+        for (MobEffectInstance instance : this.getActiveEffects()) player.connection.send(new ClientboundUpdateMobEffectPacket(
+                player.getId(), instance, false
+        ));
+        return true;
     }
 
     @WrapOperation(method = "igniteForTicks", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;getAttributeValue(Lnet/minecraft/core/Holder;)D"))
