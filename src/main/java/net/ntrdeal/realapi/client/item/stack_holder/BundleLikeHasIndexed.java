@@ -1,14 +1,17 @@
 package net.ntrdeal.realapi.client.item.stack_holder;
 
 import com.mojang.serialization.MapCodec;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.item.properties.conditional.ConditionalItemModelProperty;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
-import net.ntrdeal.realapi.item.component.BundleLikeData;
+import net.ntrdeal.realapi.item.component.custom.BundleLikeData;
 import org.jspecify.annotations.Nullable;
 
+@Environment(EnvType.CLIENT)
 public record BundleLikeHasIndexed() implements ConditionalItemModelProperty {
     public static final MapCodec<BundleLikeHasIndexed> MAP_CODEC = MapCodec.unit(new BundleLikeHasIndexed());
 

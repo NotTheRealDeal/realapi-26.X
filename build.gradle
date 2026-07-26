@@ -1,5 +1,6 @@
 plugins {
 	id 'net.fabricmc.fabric-loom' version "${loom_version}"
+	id 'io.github.ladysnake.chenille' version "${chenille_version}"
 	id "com.vanniktech.maven.publish" version "${vanniktech_version}"
 	id 'maven-publish'
 	id 'signing'
@@ -14,7 +15,8 @@ base {
 
 repositories {
 	mavenLocal()
-	maven {url = 'https://maven.ladysnake.org/releases'}
+	chenille.repositories.ladysnake()
+	chenille.repositories.modrinth()
 }
 
 loom {
@@ -35,6 +37,12 @@ dependencies {
 	//compile mods
 	compileOnly "org.ladysnake.cardinal-components-api:cardinal-components-base:${project.cca_version}"
 	compileOnly "org.ladysnake.cardinal-components-api:cardinal-components-entity:${project.cca_version}"
+
+	//runtime mods
+	runtimeOnly "maven.modrinth:mOgUt4GM:${project.modmenu_version}"
+	runtimeOnly "maven.modrinth:TQTTVgYE:${project.carpet_version}"
+	runtimeOnly "maven.modrinth:l6YH9Als:${project.spark_version}"
+	runtimeOnly "maven.modrinth:AANobbMI:${project.sodium_version}"
 }
 
 processResources {

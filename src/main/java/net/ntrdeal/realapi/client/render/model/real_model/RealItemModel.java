@@ -1,6 +1,8 @@
-package net.ntrdeal.realapi.client.render;
+package net.ntrdeal.realapi.client.render.model.real_model;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.rendering.v1.RenderStateDataKey;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.SubmitNodeCollector;
@@ -17,6 +19,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Environment(EnvType.CLIENT)
 public interface RealItemModel<T> extends ItemModel {
     RenderStateDataKey<Map<Integer, List<RealItemModel<?>>>> RENDERER_KEY = RenderStateDataKey.create();
     int PRE_TRANSFORM = 0;

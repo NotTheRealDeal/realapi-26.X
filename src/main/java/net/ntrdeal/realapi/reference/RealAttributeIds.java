@@ -7,6 +7,8 @@ import net.ntrdeal.realapi.RealAPI;
 import net.ntrdeal.realapi.util.RegistryUtil;
 
 public final class RealAttributeIds {
+    private RealAttributeIds(){}
+
     private static final RegistryUtil.ResourceCreator<Attribute> CREATOR = RegistryUtil.resourceCreator(Registries.ATTRIBUTE, RealAPI::id);
 
     public static final ResourceKey<Attribute> MOVEMENT_SCALE = CREATOR.create("movement_scale");

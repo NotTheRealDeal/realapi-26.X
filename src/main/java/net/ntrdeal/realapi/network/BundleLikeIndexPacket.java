@@ -8,7 +8,7 @@ import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.ntrdeal.realapi.RealAPI;
-import net.ntrdeal.realapi.item.component.BundleLikeData;
+import net.ntrdeal.realapi.item.component.custom.BundleLikeData;
 
 public record BundleLikeIndexPacket(int slotIndex, int index) implements CustomPacketPayload {
     public static final Type<BundleLikeIndexPacket> TYPE = new Type<>(RealAPI.id("bundle_like_index"));

@@ -6,8 +6,8 @@ import net.minecraft.client.gui.ItemSlotMouseAction;
 import net.minecraft.world.inventory.ContainerInput;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-import net.ntrdeal.realapi.item.component.BundleLikeData;
 import net.ntrdeal.realapi.item.component.RealDataComponents;
+import net.ntrdeal.realapi.item.component.custom.BundleLikeData;
 import net.ntrdeal.realapi.network.BundleLikeIndexPacket;
 import org.joml.Vector2i;
 

@@ -10,8 +10,10 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jspecify.annotations.Nullable;
 
-public interface RealBlockBreakingEvents {
-    Event<DropResourcesEvent> DROP_RESOURCES = EventFactory.createArrayBacked(DropResourcesEvent.class, events -> (state, level, pos, blockEntity, entity, stack) -> {
+public final class RealBlockBreakingEvents {
+    private RealBlockBreakingEvents(){}
+
+    public static final Event<DropResourcesEvent> DROP_RESOURCES = EventFactory.createArrayBacked(DropResourcesEvent.class, events -> (state, level, pos, blockEntity, entity, stack) -> {
         for (DropResourcesEvent event : events) {
             if (event.drop(state, level, pos, blockEntity, entity, stack)) return false;
         }
@@ -19,7 +21,8 @@ public interface RealBlockBreakingEvents {
         return true;
     });
 
-    interface DropResourcesEvent {
+    @FunctionalInterface
+    public interface DropResourcesEvent {
         boolean drop(BlockState state, Level level, BlockPos pos, @Nullable BlockEntity blockEntity, @Nullable Entity entity, ItemStack stack);
     }
 }

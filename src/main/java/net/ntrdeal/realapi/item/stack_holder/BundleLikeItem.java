@@ -23,8 +23,8 @@ import net.minecraft.world.item.*;
 import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.level.Level;
 import net.ntrdeal.realapi.data.WeightHolder;
-import net.ntrdeal.realapi.item.component.BundleLikeData;
 import net.ntrdeal.realapi.item.component.RealDataComponents;
+import net.ntrdeal.realapi.item.component.custom.BundleLikeData;
 import org.apache.commons.lang3.math.Fraction;
 import org.jspecify.annotations.Nullable;
 

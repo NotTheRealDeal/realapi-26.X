@@ -18,8 +18,12 @@ import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.UnaryOperator;
 
-public class RegistryUtil {
-    public static class ItemUtil {
+public final class RegistryUtil {
+    private RegistryUtil(){}
+
+    public static final class ItemUtil {
+        private ItemUtil(){}
+
         public static Function<Item.Properties, Item> blockCustomName(Block block) {
             return Items.createBlockItemWithCustomItemName(block);
         }
@@ -77,13 +81,17 @@ public class RegistryUtil {
         }
     }
 
-    public static class ComponentUtil {
+    public static final class ComponentUtil {
+        private ComponentUtil(){}
+
         public static <T> DataComponentType<T> register(ResourceKey<DataComponentType<?>> key, UnaryOperator<DataComponentType.Builder<T>> operator) {
             return Registry.register(BuiltInRegistries.DATA_COMPONENT_TYPE, key, operator.apply(DataComponentType.builder()).build());
         }
     }
 
-    public static class TabUtil {
+    public static final class TabUtil {
+        private TabUtil(){}
+
         public static CreativeModeTab register(ResourceKey<CreativeModeTab> key, UnaryOperator<CreativeModeTab.Builder> operator) {
             return Registry.register(BuiltInRegistries.CREATIVE_MODE_TAB, key, operator.apply(FabricCreativeModeTab.builder()).build());
         }

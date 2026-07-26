@@ -6,7 +6,9 @@ import net.ntrdeal.realapi.entity.event.EntityAttributeEvents;
 import net.ntrdeal.realapi.reference.RealAttributeIds;
 import net.ntrdeal.realapi.tag.RealAttributeTags;
 
-public class RealAttributes {
+public final class RealAttributes {
+    private RealAttributes(){}
+
     public static final Holder<Attribute> MOVEMENT_SCALE = AttributeBuilder.of(RealAttributeIds.MOVEMENT_SCALE)
             .range(1d, 0d, 1024d).sync().sentiment(Attribute.Sentiment.POSITIVE).buildAndRegister();
 

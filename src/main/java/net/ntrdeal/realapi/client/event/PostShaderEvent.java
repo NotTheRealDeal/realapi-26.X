@@ -4,6 +4,8 @@ import com.mojang.blaze3d.framegraph.FrameGraphBuilder;
 import com.mojang.blaze3d.pipeline.RenderTarget;
 import com.mojang.blaze3d.resource.CrossFrameResourcePool;
 import com.mojang.blaze3d.resource.GraphicsResourceAllocator;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.event.Event;
 import net.fabricmc.fabric.api.event.EventFactory;
 import net.minecraft.client.DeltaTracker;
@@ -11,6 +13,7 @@ import net.minecraft.client.renderer.PostChain;
 import net.minecraft.client.renderer.ShaderManager;
 import org.jspecify.annotations.Nullable;
 
+@Environment(EnvType.CLIENT) @FunctionalInterface
 public interface PostShaderEvent {
     Event<PostShaderEvent> EVENT = EventFactory.createArrayBacked(PostShaderEvent.class, events -> (tracker, manager, target, pool) -> {
         for (PostShaderEvent event : events) event.render(tracker, manager, target, pool);

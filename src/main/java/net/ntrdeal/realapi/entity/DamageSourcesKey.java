@@ -3,6 +3,7 @@ package net.ntrdeal.realapi.entity;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.world.damagesource.DamageSources;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.level.Level;
 import net.ntrdeal.realapi.data.data_mapper.DataKey;
 import net.ntrdeal.realapi.data.data_mapper.DataKeyMap;
 
@@ -14,8 +15,12 @@ public interface DamageSourcesKey<T> extends DataKey<T> {
 
     T create(RegistryAccess access, DamageSources sources);
 
+    default T get(Level level) {
+        return this.get(((DataKeyMap) level.damageSources()));
+    }
+
     default T get(Entity entity) {
-        return this.get((DataKeyMap) entity.damageSources());
+        return this.get(entity.level());
     }
 
     static <T> DamageSourcesKey<T> register(DamageSourcesKey<T> key) {

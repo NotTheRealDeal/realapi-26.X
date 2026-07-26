@@ -1,5 +1,7 @@
-package net.ntrdeal.realapi.client.render;
+package net.ntrdeal.realapi.client.render.model.real_model;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.item.ItemModel;
@@ -13,6 +15,7 @@ import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import org.jspecify.annotations.Nullable;
 
+@Environment(EnvType.CLIENT)
 public record Update<T>(
         ItemModelResolver resolver,
         ItemStackRenderState state,

@@ -1,4 +1,4 @@
-package net.ntrdeal.realapi.item.component;
+package net.ntrdeal.realapi.item.component.type;
 
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;

@@ -21,6 +21,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.waypoints.WaypointTransmitter;
 import net.ntrdeal.realapi.data.mixin.RealMixin;
 import net.ntrdeal.realapi.entity.RealAttributes;
+import net.ntrdeal.realapi.tag.RealDamageTypeTags;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -86,7 +87,7 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, Wa
 
         if (source.getEntity() instanceof LivingEntity entity) {
             if (this.isBaby() || this.entityTags().contains("adolescence")) damage += (float) entity.getAttributeValue(RealAttributes.BANE_OF_ADOLESCENCE);
-            if (source.is(DamageTypeTags.IS_PROJECTILE)) damage *= (float) entity.getAttributeValue(RealAttributes.RANGED_ATTACK_MULTIPLIER);
+            if (source.is(RealDamageTypeTags.RANGED_ATTACK_MULTIPLIED)) damage *= (float) entity.getAttributeValue(RealAttributes.RANGED_ATTACK_MULTIPLIER);
         }
 
         if (fireAffected) damage *= fireMulti;

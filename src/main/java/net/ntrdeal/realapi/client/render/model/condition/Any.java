@@ -1,7 +1,8 @@
-package net.ntrdeal.realapi.client.render;
+package net.ntrdeal.realapi.client.render.model.condition;
 
 import com.mojang.serialization.MapCodec;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.item.properties.conditional.ConditionalItemModelProperties;
 import net.minecraft.client.renderer.item.properties.conditional.ConditionalItemModelProperty;
@@ -12,22 +13,23 @@ import org.jspecify.annotations.Nullable;
 
 import java.util.List;
 
-public record MultiProperty(List<ConditionalItemModelProperty> properties) implements ConditionalItemModelProperty {
-    public static final MapCodec<MultiProperty> MAP_CODEC = RecordCodecBuilder.mapCodec(property -> property.group(
-            ConditionalItemModelProperties.MAP_CODEC.codec().listOf().fieldOf("properties").forGetter(MultiProperty::properties)
-    ).apply(property, MultiProperty::new));
+@Environment(EnvType.CLIENT)
+public record Any(List<ConditionalItemModelProperty> properties) implements ConditionalItemModelProperty {
+    public static final MapCodec<Any> MAP_CODEC = ConditionalItemModelProperties.MAP_CODEC.codec().listOf().xmap(
+            Any::new, Any::properties
+    ).fieldOf("properties");
 
     @Override
     public boolean get(ItemStack itemStack, @Nullable ClientLevel level, @Nullable LivingEntity owner, int seed, ItemDisplayContext displayContext) {
         for (ConditionalItemModelProperty property : this.properties) {
-            if (!property.get(itemStack, level, owner, seed, displayContext)) return false;
+            if (property.get(itemStack, level, owner, seed, displayContext)) return true;
         }
 
-        return true;
+        return false;
     }
 
     @Override
-    public MapCodec<? extends ConditionalItemModelProperty> type() {
+    public MapCodec<Any> type() {
         return MAP_CODEC;
     }
 }

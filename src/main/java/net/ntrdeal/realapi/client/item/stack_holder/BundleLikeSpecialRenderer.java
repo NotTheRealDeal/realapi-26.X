@@ -12,10 +12,11 @@ import net.minecraft.world.entity.ItemOwner;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemStackTemplate;
-import net.ntrdeal.realapi.item.component.BundleLikeData;
+import net.ntrdeal.realapi.item.component.custom.BundleLikeData;
 import org.joml.Matrix4fc;
 import org.jspecify.annotations.Nullable;
 
+@Environment(EnvType.CLIENT)
 public class BundleLikeSpecialRenderer implements ItemModel {
     public static final ItemModel INSTANCE = new BundleLikeSpecialRenderer();
 

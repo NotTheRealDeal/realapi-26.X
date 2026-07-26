@@ -1,4 +1,4 @@
-package net.ntrdeal.realapi.item.component;
+package net.ntrdeal.realapi.item.component.custom;
 
 import com.mojang.serialization.Codec;
 import net.minecraft.core.component.DataComponentType;
@@ -6,6 +6,7 @@ import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemStackTemplate;
+import net.ntrdeal.realapi.item.component.RealDataComponents;
 import net.ntrdeal.realapi.item.stack_holder.HolderBuilder;
 import net.ntrdeal.realapi.item.stack_holder.StackHolder;
 import org.jspecify.annotations.Nullable;

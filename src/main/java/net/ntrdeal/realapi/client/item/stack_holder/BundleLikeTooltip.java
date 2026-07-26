@@ -1,6 +1,8 @@
 package net.ntrdeal.realapi.client.item.stack_holder;
 
 import com.mojang.serialization.DataResult;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
@@ -19,6 +21,7 @@ import org.jspecify.annotations.Nullable;
 
 import java.util.List;
 
+@Environment(EnvType.CLIENT)
 public class BundleLikeTooltip<T extends StackHolder<T>> implements ClientTooltipComponent {
     public static final Identifier PROGRESSBAR_BORDER_SPRITE = Identifier.withDefaultNamespace("container/bundle/bundle_progressbar_border");
     public static final Identifier PROGRESSBAR_FILL_SPRITE = Identifier.withDefaultNamespace("container/bundle/bundle_progressbar_fill");

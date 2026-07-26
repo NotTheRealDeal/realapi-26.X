@@ -1,4 +1,7 @@
-accessWidener v2 official
+classTweaker v2 official
+
+transitive-inject-interface net/minecraft/core/component/PatchedDataComponentMap net/ntrdeal/realapi/item/component/type/RealComponentMap
+transitive-inject-interface net/minecraft/world/item/ItemStack net/ntrdeal/realapi/item/component/type/ClassToTypeHolder
 
 accessible field net/minecraft/client/renderer/item/ItemStackRenderState displayContext Lnet/minecraft/world/item/ItemDisplayContext;
 accessible field net/minecraft/client/renderer/item/ItemStackRenderState$LayerRenderState foilType Lnet/minecraft/client/renderer/item/ItemStackRenderState$FoilType;

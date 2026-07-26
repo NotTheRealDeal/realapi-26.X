@@ -1,4 +1,4 @@
-package net.ntrdeal.realapi.item.component;
+package net.ntrdeal.realapi.item.component.custom;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;

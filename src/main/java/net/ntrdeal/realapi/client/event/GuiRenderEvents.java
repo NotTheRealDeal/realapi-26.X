@@ -1,6 +1,8 @@
 package net.ntrdeal.realapi.client.event;
 
 import com.mojang.blaze3d.pipeline.RenderPipeline;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.event.Event;
 import net.fabricmc.fabric.api.event.EventFactory;
 import net.minecraft.client.DeltaTracker;
@@ -12,8 +14,11 @@ import org.jspecify.annotations.Nullable;
 
 import java.util.function.Function;
 
-public interface GuiRenderEvents {
-    Event<ReplaceCrosshairEvent> REPLACE_CROSSHAIR = EventFactory.createArrayBacked(ReplaceCrosshairEvent.class, events -> (minecraft, currentCrosshair) -> {
+@Environment(EnvType.CLIENT)
+public final class GuiRenderEvents {
+    private GuiRenderEvents(){}
+
+    public static final Event<ReplaceCrosshairEvent> REPLACE_CROSSHAIR = EventFactory.createArrayBacked(ReplaceCrosshairEvent.class, events -> (minecraft, currentCrosshair) -> {
         for (ReplaceCrosshairEvent event : events) {
             Crosshair newCrosshair = event.replace(minecraft, currentCrosshair);
             if (newCrosshair != null && !newCrosshair.equals(currentCrosshair)) return newCrosshair;
@@ -21,13 +26,13 @@ public interface GuiRenderEvents {
         return currentCrosshair;
     });
 
-    Event<CrosshairAdditionEvent> CROSSHAIR_ADDITION = EventFactory.createArrayBacked(CrosshairAdditionEvent.class, events -> (minecraft, graphics, deltaTracker, crosshair, x, y) -> {
+    public static final Event<CrosshairAdditionEvent> CROSSHAIR_ADDITION = EventFactory.createArrayBacked(CrosshairAdditionEvent.class, events -> (minecraft, graphics, deltaTracker, crosshair, x, y) -> {
         for (CrosshairAdditionEvent event : events) {
             event.add(minecraft, graphics, deltaTracker, crosshair, x, y);
         }
     });
 
-    Event<ReplaceAttackIndicatorEvent> REPLACE_ATTACK_INDICATOR = EventFactory.createArrayBacked(ReplaceAttackIndicatorEvent.class, events -> (minecraft, defaultPack, crosshair) -> {
+    public static final Event<ReplaceAttackIndicatorEvent> REPLACE_ATTACK_INDICATOR = EventFactory.createArrayBacked(ReplaceAttackIndicatorEvent.class, events -> (minecraft, defaultPack, crosshair) -> {
         for (ReplaceAttackIndicatorEvent event : events) {
             AttackIndicator pack = event.replace(minecraft, defaultPack, crosshair);
             if (pack != null && !pack.equals(defaultPack)) return pack;
@@ -35,22 +40,23 @@ public interface GuiRenderEvents {
         return defaultPack;
     });
 
-    @FunctionalInterface
-    interface ReplaceCrosshairEvent {
+    @Environment(EnvType.CLIENT) @FunctionalInterface
+    public interface ReplaceCrosshairEvent {
         @Nullable Crosshair replace(Minecraft minecraft, Crosshair currentCrosshair);
     }
 
-    @FunctionalInterface
-    interface CrosshairAdditionEvent {
+    @Environment(EnvType.CLIENT) @FunctionalInterface
+    public interface CrosshairAdditionEvent {
         void add(Minecraft minecraft, GuiGraphicsExtractor graphics, DeltaTracker deltaTracker, Crosshair crosshair, int x, int y);
     }
 
-    @FunctionalInterface
-    interface ReplaceAttackIndicatorEvent {
+    @Environment(EnvType.CLIENT) @FunctionalInterface
+    public interface ReplaceAttackIndicatorEvent {
         GuiRenderEvents.@Nullable AttackIndicator replace(Minecraft minecraft, AttackIndicator defaultPack, Crosshair crosshair);
     }
 
-    record Crosshair(
+    @Environment(EnvType.CLIENT)
+    public record Crosshair(
             RenderPipeline pipeline,
             Identifier texture,
             Function<Integer, Integer> guiWidthToX,
@@ -80,7 +86,8 @@ public interface GuiRenderEvents {
         }
     }
 
-    record AttackIndicator(Identifier full, Identifier background, Identifier progress) {
+    @Environment(EnvType.CLIENT)
+    public record AttackIndicator(Identifier full, Identifier background, Identifier progress) {
         public static final AttackIndicator DEFAULT = new AttackIndicator(
                 Identifier.withDefaultNamespace("hud/crosshair_attack_indicator_full"),
                 Identifier.withDefaultNamespace("hud/crosshair_attack_indicator_background"),

@@ -7,7 +7,9 @@ import org.ladysnake.cca.api.v8.component.CardinalComponent;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
-public class CardinalUtil {
+public final class CardinalUtil {
+    private CardinalUtil(){}
+
     public static <C extends CardinalComponent> void ifPresent(ComponentKey<C> key, Object object, Consumer<C> consumer) {
         if (object instanceof ComponentProvider && key.getNullable(object) instanceof C component) consumer.accept(component);
     }
