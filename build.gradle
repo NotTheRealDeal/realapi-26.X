@@ -40,8 +40,8 @@ dependencies {
 
 	//runtime mods
 	runtimeOnly "maven.modrinth:mOgUt4GM:${project.modmenu_version}"
-	runtimeOnly "maven.modrinth:TQTTVgYE:${project.carpet_version}"
-	runtimeOnly "maven.modrinth:l6YH9Als:${project.spark_version}"
+//	runtimeOnly "maven.modrinth:TQTTVgYE:${project.carpet_version}"
+//	runtimeOnly "maven.modrinth:l6YH9Als:${project.spark_version}"
 	runtimeOnly "maven.modrinth:AANobbMI:${project.sodium_version}"
 }
 

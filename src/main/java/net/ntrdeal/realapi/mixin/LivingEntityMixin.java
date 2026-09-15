@@ -47,7 +47,8 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, Wa
                 .add(RealAttributes.RANGED_ATTACK_MULTIPLIER)
                 .add(RealAttributes.BANE_OF_ADOLESCENCE)
                 .add(RealAttributes.FIRE_DAMAGE_MULTIPLIER)
-                .add(RealAttributes.DODGE_CHANCE);
+                .add(RealAttributes.DODGE_CHANCE)
+                .add(RealAttributes.NPC_ARMOR);
     }
 
     @WrapMethod(method = "removeAllEffects")
@@ -78,9 +79,6 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, Wa
 
     @WrapMethod(method = "hurtServer")
     private boolean ntrdeal$damageModifiers(ServerLevel level, DamageSource source, float damage, Operation<Boolean> original) {
-        double dodgeChance = this.getAttributeValue(RealAttributes.DODGE_CHANCE);
-        if (dodgeChance != 0 && this.getRandom().nextDouble() <= dodgeChance) return false;
-
         boolean fireAffected = source.is(DamageTypeTags.IS_FIRE) && !source.is(DamageTypes.LAVA);
         float fireMulti = (float) this.getAttributeValue(RealAttributes.FIRE_DAMAGE_MULTIPLIER);
         if (fireAffected && fireMulti == 0) return false;

@@ -11,12 +11,15 @@
     "LivingEntityMixin",
     "PlaceRecipeHelperMixin",
     "PlayerMixin",
+    "attribute.AttributeMapAccessor",
+    "attribute.LivingEntityMixin",
+    "attribute.PermanentModifiers",
     "component.ConsumableMixin",
+    "component.ItemEntityMixin",
     "component.ItemStackMixin",
     "component.PatchedDataComponentMapMixin",
     "event.BlockMixin",
     "event.ItemEntityMixin",
-    "event.LivingEntityMixin",
     "event.ServerPlayerMixin"
   ],
   "client": [

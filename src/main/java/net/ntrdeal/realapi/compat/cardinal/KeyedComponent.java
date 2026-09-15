@@ -1,4 +1,4 @@
-package net.ntrdeal.realapi.cardinal_components;
+package net.ntrdeal.realapi.compat.cardinal;
 
 import org.ladysnake.cca.api.v3.component.ComponentKey;
 import org.ladysnake.cca.api.v3.component.ComponentProvider;

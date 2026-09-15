@@ -2,7 +2,7 @@ package net.ntrdeal.realapi;
 
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
-import net.ntrdeal.realapi.datagen.client.language.ModEnglishProvider;
+import net.ntrdeal.realapi.datagen.client.language.RealEnglishProvider;
 import net.ntrdeal.realapi.datagen.tag.RealDamageTypeTagProvider;
 
 public class RealAPIDataGenerator implements DataGeneratorEntrypoint {
@@ -12,6 +12,6 @@ public class RealAPIDataGenerator implements DataGeneratorEntrypoint {
 
         pack.addProvider(RealDamageTypeTagProvider::new);
 
-        pack.addProvider(ModEnglishProvider::new);
+        pack.addProvider(RealEnglishProvider::new);
     }
 }

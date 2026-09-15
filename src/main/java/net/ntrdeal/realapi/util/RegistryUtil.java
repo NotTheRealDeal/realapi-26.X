@@ -97,33 +97,23 @@ public final class RegistryUtil {
         }
     }
 
-    public record ResourceCreator<T>(ResourceKey<Registry<T>> registry, Function<String, Identifier> function) {
+    public record ResourceCreator<T>(ResourceKey<? extends Registry<T>> registry, Function<String, Identifier> function) {
         public ResourceKey<T> create(String path) {
             return ResourceKey.create(this.registry, this.function.apply(path));
         }
     }
 
-    public record TagCreator<T>(ResourceKey<Registry<T>> registry, Function<String, Identifier> function) {
+    public record TagCreator<T>(ResourceKey<? extends Registry<T>> registry, Function<String, Identifier> function) {
         public TagKey<T> create(String path) {
             return TagKey.create(this.registry, this.function.apply(path));
         }
     }
 
-    @Deprecated(forRemoval = true)
-    public static <T> ResourceCreator<T> creator(ResourceKey<Registry<T>> registry, String namespace) {
-        return resourceCreator(registry, path -> Identifier.fromNamespaceAndPath(namespace, path));
-    }
-
-    @Deprecated(forRemoval = true)
-    public static <T> ResourceCreator<T> creator(ResourceKey<Registry<T>> registry, Function<String, Identifier> function) {
-        return resourceCreator(registry, function);
-    }
-
-    public static <T> ResourceCreator<T> resourceCreator(ResourceKey<Registry<T>> registry, Function<String, Identifier> function) {
+    public static <T> ResourceCreator<T> resourceCreator(ResourceKey<? extends Registry<T>> registry, Function<String, Identifier> function) {
         return new ResourceCreator<>(registry, function);
     }
 
-    public static <T> TagCreator<T> tagCreator(ResourceKey<Registry<T>> registry, Function<String, Identifier> function) {
+    public static <T> TagCreator<T> tagCreator(ResourceKey<? extends Registry<T>> registry, Function<String, Identifier> function) {
         return new TagCreator<>(registry, function);
     }
 }

@@ -21,4 +21,5 @@ public final class RealAttributeIds {
     public static final ResourceKey<Attribute> FIRE_DAMAGE_MULTIPLIER = CREATOR.create("fire_damage_multiplier");
     public static final ResourceKey<Attribute> DODGE_CHANCE = CREATOR.create("dodge_chance");
     public static final ResourceKey<Attribute> INTELLIGENCE = CREATOR.create("intelligence");
+    public static final ResourceKey<Attribute> NPC_ARMOR = CREATOR.create("npc_armor");
 }

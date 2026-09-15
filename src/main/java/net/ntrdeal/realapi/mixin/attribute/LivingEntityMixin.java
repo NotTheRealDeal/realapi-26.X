@@ -1,4 +1,4 @@
-package net.ntrdeal.realapi.mixin.event;
+package net.ntrdeal.realapi.mixin.attribute;
 
 import net.minecraft.core.Holder;
 import net.minecraft.world.entity.Attackable;

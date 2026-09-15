@@ -8,6 +8,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
 import net.minecraft.util.ARGB;
 import net.minecraft.util.Mth;
+import net.minecraft.util.Prediction;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
@@ -201,7 +202,7 @@ public class BundleLikeItem<T extends StackHolder<T>> extends Item implements We
         if (droppedStack.isEmpty()) return;
         this.playRemoveSound(player);
         this.setBundle(level, stack, builder.build());
-        player.drop(droppedStack, true);
+        player.drop(droppedStack, true, Prediction.PREDICTED);
         this.playDropContentsSound(level, player);
         player.awardStat(Stats.ITEM_USED.get(this));
     }

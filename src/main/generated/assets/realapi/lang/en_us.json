@@ -7,10 +7,12 @@
   "attribute.realapi.fire_damage_multiplier": "Fire Damage Multiplier",
   "attribute.realapi.intelligence": "Intelligence",
   "attribute.realapi.movement_scale": "Movement Scale",
+  "attribute.realapi.npc_armor": "NPC Armor",
   "attribute.realapi.ranged_attack_multiplier": "Ranged Attack Multiplier",
   "attribute.realapi.shield_fragility": "Shield Fragility",
   "item.realapi.keep_on_death": "Kept On Death",
   "tag.attribute.realapi.dimensions_refresher": "Dimensions Refresher",
+  "tag.damage_type.realapi.range_attack_multiplied": "Ranged Attack Multiplied",
   "tag.item.realapi.keep_on_death": "Keep On Death",
   "tag.mob_effect.realapi.cannot_clear": "Cannot Clear",
   "tag.mob_effect.realapi.player_only": "Player Only"

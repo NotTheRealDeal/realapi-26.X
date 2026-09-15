@@ -1,6 +1,8 @@
 package net.ntrdeal.realapi.entity;
 
+import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.minecraft.core.Holder;
+import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.ntrdeal.realapi.entity.event.EntityAttributeEvents;
 import net.ntrdeal.realapi.reference.RealAttributeIds;
@@ -39,9 +41,16 @@ public final class RealAttributes {
     public static final Holder<Attribute> INTELLIGENCE = AttributeBuilder.of(RealAttributeIds.INTELLIGENCE)
             .range(1d, 0d, 1024d).sync().sentiment(Attribute.Sentiment.POSITIVE).buildAndRegister();
 
+    public static final Holder<Attribute> NPC_ARMOR = AttributeBuilder.of(RealAttributeIds.NPC_ARMOR)
+            .range(0d, 0d, 30d).sync().sentiment(Attribute.Sentiment.POSITIVE).buildAndRegister();
+
     public static void register() {
         EntityAttributeEvents.UPDATED.register((entity, attribute) -> {
             if (attribute.is(RealAttributeTags.DIMENSIONS_REFRESHER)) entity.refreshDimensions();
         });
+
+        ServerLivingEntityEvents.ALLOW_DAMAGE.register((entity, source, _) ->
+                source.is(DamageTypeTags.BYPASSES_INVULNERABILITY) || !(entity.getRandom().nextDouble() < entity.getAttributeValue(DODGE_CHANCE))
+        );
     }
 }

@@ -1,4 +1,4 @@
-package net.ntrdeal.realapi.cardinal_components;
+package net.ntrdeal.realapi.compat.cardinal;
 
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.Level;

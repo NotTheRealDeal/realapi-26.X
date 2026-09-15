@@ -6,12 +6,14 @@ import net.minecraft.core.component.PatchedDataComponentMap;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemInstance;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.ntrdeal.realapi.data.mixin.RealMixin;
 import net.ntrdeal.realapi.item.component.type.ClassToTypeHolder;
 import net.ntrdeal.realapi.item.component.type.InventoryTicker;
+import net.ntrdeal.realapi.item.component.type.ItemEntityListener;
 import net.ntrdeal.realapi.item.component.type.PostHurtListener;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -37,6 +39,12 @@ public abstract class ItemStackMixin implements DataComponentHolder, ItemInstanc
     private void ntrdeal$postHurt(LivingEntity mob, LivingEntity attacker, CallbackInfo ci) {
         ItemStack stack = this.getThis();
         this.runAllOfClass(PostHurtListener.class, listener -> listener.postHurt(stack, attacker, mob));
+    }
+
+    @Inject(method = "onDestroyed", at = @At("RETURN"))
+    private void ntrdeal$destroyed(ItemEntity itemEntity, CallbackInfo ci) {
+        ItemStack stack = this.getThis();
+        this.runAllOfClass(ItemEntityListener.class, listener -> listener.destroyed(itemEntity, stack));
     }
 
     @Override

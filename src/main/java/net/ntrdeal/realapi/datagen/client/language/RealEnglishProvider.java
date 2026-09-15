@@ -12,9 +12,9 @@ import net.ntrdeal.realapi.tag.RealMobEffectTags;
 
 import java.util.concurrent.CompletableFuture;
 
-public class ModEnglishProvider extends FabricLanguageProvider {
-    public ModEnglishProvider(FabricPackOutput output, CompletableFuture<HolderLookup.Provider> provider) {
-        super(output, provider);
+public class RealEnglishProvider extends FabricLanguageProvider {
+    public RealEnglishProvider(FabricPackOutput output, CompletableFuture<HolderLookup.Provider> provider) {
+        super(output, "en_us", provider);
     }
 
     @Override
@@ -29,6 +29,7 @@ public class ModEnglishProvider extends FabricLanguageProvider {
         builder.add(RealAttributes.FIRE_DAMAGE_MULTIPLIER, "Fire Damage Multiplier");
         builder.add(RealAttributes.DODGE_CHANCE, "Dodge Chance");
         builder.add(RealAttributes.INTELLIGENCE, "Intelligence");
+        builder.add(RealAttributes.NPC_ARMOR, "NPC Armor");
 
         builder.add(RealAttributeTags.DIMENSIONS_REFRESHER, "Dimensions Refresher");
 

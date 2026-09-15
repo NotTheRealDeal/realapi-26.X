@@ -4,6 +4,7 @@ import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.ItemStackWithSlot;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Avatar;
 import net.minecraft.world.entity.ContainerUser;
@@ -22,8 +23,8 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 @Mixin(Player.class)
 public abstract class PlayerMixin extends Avatar implements ContainerUser, RealMixin<Player> {
@@ -53,17 +54,21 @@ public abstract class PlayerMixin extends Avatar implements ContainerUser, RealM
 
     @Override
     protected void dropAllDeathLoot(ServerLevel level, DamageSource source) {
-        Map<Integer, ItemStack> keptStacks = new HashMap<>();
         Inventory inventory = this.getInventory();
         Player player = this.getThis();
 
+        List<ItemStackWithSlot> stacksWithSlot = new ArrayList<>();
+
         for (int slot = 0; slot < inventory.getContainerSize(); slot++) {
             ItemStack stack = inventory.getItem(slot);
-            if (KeepOnDeathEvent.EVENT.invoker().keepOnDeath(player, stack)) keptStacks.put(slot, inventory.removeItem(slot, stack.count()));
+            if (stack.isEmpty()) continue;
+            if (KeepOnDeathEvent.EVENT.invoker().keepOnDeath(player, stack)) stacksWithSlot.add(new ItemStackWithSlot(
+                    slot, inventory.removeItem(slot, stack.count())
+            ));
         }
 
-        super.dropAllDeathLoot(level, source);
+        this.setAttached(KeepOnDeathEvent.TYPE, List.copyOf(stacksWithSlot));
 
-        keptStacks.forEach(inventory::add);
+        super.dropAllDeathLoot(level, source);
     }
 }

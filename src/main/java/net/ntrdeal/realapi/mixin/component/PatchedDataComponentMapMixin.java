@@ -18,13 +18,12 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.HashSet;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Set;
 
 @Mixin(PatchedDataComponentMap.class)
 public abstract class PatchedDataComponentMapMixin implements RealComponentMap {
-    @Unique private final Reference2ObjectMap<Class<?>, Set<DataComponentType<?>>> classToType = new Reference2ObjectOpenHashMap<>();
-    @Unique private final Reference2ObjectMap<DataComponentType<?>, Set<Class<?>>> typeToClass = new Reference2ObjectOpenHashMap<>();
+    @Unique private Reference2ObjectMap<Class<?>, Set<DataComponentType<?>>> classToType = new Reference2ObjectOpenHashMap<>();
+    @Unique private Reference2ObjectMap<DataComponentType<?>, Set<Class<?>>> typeToClass = new Reference2ObjectOpenHashMap<>();
 
     @WrapMethod(method = "set(Lnet/minecraft/core/component/DataComponentType;Ljava/lang/Object;)Ljava/lang/Object;")
     private <T> T ntrdeal$updateCache(DataComponentType<T> type, T value, Operation<T> original) {
@@ -48,8 +47,8 @@ public abstract class PatchedDataComponentMapMixin implements RealComponentMap {
         return returning;
     }
 
-    @WrapMethod(method = "applyPatch(Lnet/minecraft/core/component/DataComponentType;Ljava/util/Optional;)V")
-    private void ntrdeal$updateCache(DataComponentType<?> type, Optional<?> value, Operation<Void> original) {
+    @WrapMethod(method = "applyPatch(Lnet/minecraft/core/component/DataComponentType;Ljava/lang/Object;)V")
+    private void ntrdeal$applyPatchUpdateCache(DataComponentType<?> type, Object value, Operation<Void> original) {
         boolean hadBefore = this.has(type);
         original.call(type, value);
         boolean hasNow = this.has(type);
@@ -91,10 +90,8 @@ public abstract class PatchedDataComponentMapMixin implements RealComponentMap {
             Reference2ObjectMap<Class<?>, Set<DataComponentType<?>>> classToType,
             Reference2ObjectMap<DataComponentType<?>, Set<Class<?>>> typeToClass
     ) {
-        this.classToType.clear();
-        this.typeToClass.clear();
-        this.classToType.putAll(classToType);
-        this.typeToClass.putAll(typeToClass);
+        this.classToType = new Reference2ObjectOpenHashMap<>(classToType);
+        this.typeToClass = new Reference2ObjectOpenHashMap<>(typeToClass);
     }
 
     @Unique
