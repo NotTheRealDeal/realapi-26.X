@@ -22,11 +22,15 @@
 		],
 		"client": [
 			"net.ntrdeal.realapi.RealAPIClient"
+		],
+		"jei_mod_plugin": [
+			"net.ntrdeal.realapi.compat.jei.RealJeiPlugin"
 		]
 	},
 	"accessWidener": "realapi.classtweaker",
 	"mixins": [
-		"realapi.mixins.json"
+		"realapi.mixins.json",
+		"realapi.jei.mixins.json"
 	],
 	"depends": {
 		"fabricloader": ">=0.19.5",

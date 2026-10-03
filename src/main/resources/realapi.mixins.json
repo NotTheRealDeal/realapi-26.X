@@ -9,7 +9,6 @@
     "EntityMixin",
     "ExperienceOrbMixin",
     "LivingEntityMixin",
-    "PlaceRecipeHelperMixin",
     "PlayerMixin",
     "attribute.AttributeMapAccessor",
     "attribute.LivingEntityMixin",
@@ -20,7 +19,12 @@
     "component.PatchedDataComponentMapMixin",
     "event.BlockMixin",
     "event.ItemEntityMixin",
-    "event.ServerPlayerMixin"
+    "event.LivingEntityMixin",
+    "event.ServerPlayerMixin",
+    "recipe.CrafterBlockMixin",
+    "recipe.CrafterMenuMixin",
+    "recipe.PlaceRecipeHelperMixin",
+    "recipe.RecipeCraftingHolderMixin"
   ],
   "client": [
     "client.event.AbstractContainerScreenMixin",
@@ -28,6 +32,7 @@
     "client.event.GuiMixin",
     "client.event.HumanoidModelMixin",
     "client.event.LocalPlayerMixin",
+    "client.render.FogRendererMixin",
     "client.render.LayerRenderStateMixin"
   ],
   "injectors": {

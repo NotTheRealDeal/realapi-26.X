@@ -13,7 +13,9 @@
   "item.realapi.keep_on_death": "Kept On Death",
   "tag.attribute.realapi.dimensions_refresher": "Dimensions Refresher",
   "tag.damage_type.realapi.range_attack_multiplied": "Ranged Attack Multiplied",
+  "tag.item.realapi.hide_recipe": "Hide Recipe",
   "tag.item.realapi.keep_on_death": "Keep On Death",
   "tag.mob_effect.realapi.cannot_clear": "Cannot Clear",
-  "tag.mob_effect.realapi.player_only": "Player Only"
+  "tag.mob_effect.realapi.player_only": "Player Only",
+  "tag.recipe.realapi.require_recipe": "Require Recipe"
 }

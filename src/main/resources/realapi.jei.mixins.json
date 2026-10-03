@@ -1,0 +1,15 @@
+{
+  "required": true,
+  "package": "net.ntrdeal.realapi.compat.jei.mixin",
+  "plugin": "net.ntrdeal.realapi.compat.jei.RealJeiCompat",
+  "compatibilityLevel": "JAVA_25",
+  "client": [
+    "JeiStarterMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "overwrites": {
+    "requireAnnotations": true
+  }
+}

@@ -111,8 +111,7 @@ public abstract class PatchedDataComponentMapMixin implements RealComponentMap {
     @Unique
     private void removeFromCache(DataComponentType<?> type) {
         Set<Class<?>> collected = this.typeToClass.remove(type);
-        if (collected == null) return;
-        collected.forEach(clazz -> this.classToType.get(clazz).remove(type));
+        if (collected != null) collected.forEach(clazz -> this.classToType.get(clazz).remove(type));
     }
 
     @Unique

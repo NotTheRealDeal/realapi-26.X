@@ -22,6 +22,9 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 import java.util.function.Consumer;
 
 @Mixin(ItemStack.class)
@@ -50,5 +53,10 @@ public abstract class ItemStackMixin implements DataComponentHolder, ItemInstanc
     @Override
     public <T> void runAllOfClass(Class<? extends T> clazz, Consumer<T> consumer) {
         if (!this.isEmpty()) for (DataComponentType<? extends T> type : this.components.requestTypes(clazz)) consumer.accept(this.components.get(type));
+    }
+
+    @SuppressWarnings("unchecked")
+    public <T> Collection<T> getAllOfClass(Class<? extends T> clazz) {
+        return this.isEmpty() ? List.of() : (Collection<T>) this.components.requestTypes(clazz).stream().map(this.components::get).toList();
     }
 }

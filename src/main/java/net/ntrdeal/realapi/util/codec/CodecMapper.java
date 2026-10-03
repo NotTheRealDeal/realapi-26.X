@@ -1,4 +1,4 @@
-package net.ntrdeal.realapi.util;
+package net.ntrdeal.realapi.util.codec;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
@@ -26,9 +26,7 @@ public class CodecMapper<K, V> {
 
     @SuppressWarnings("unchecked")
     public StreamCodec<ByteBuf, V> streamCodec(Function<V, StreamCodec<? extends ByteBuf, ? extends V>> toStreamCodec) {
-        return ByteBufCodecs.idMapper(
-                (IdMap<StreamCodec<ByteBuf, V>>)(IdMap<?>) this.streamMap
-        ).dispatch(
+        return ByteBufCodecs.idMapper((IdMap<StreamCodec<ByteBuf, V>>)(IdMap<?>) this.streamMap).dispatch(
                 (Function<V, StreamCodec<ByteBuf, V>>)(Function<?, ?>) toStreamCodec, Function.identity()
         );
     }

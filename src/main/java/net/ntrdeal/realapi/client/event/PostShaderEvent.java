@@ -13,6 +13,7 @@ import net.minecraft.client.renderer.PostChain;
 import net.minecraft.client.renderer.ShaderManager;
 import org.jspecify.annotations.Nullable;
 
+@Deprecated(forRemoval = true)
 @Environment(EnvType.CLIENT) @FunctionalInterface
 public interface PostShaderEvent {
     Event<PostShaderEvent> EVENT = EventFactory.createArrayBacked(PostShaderEvent.class, events -> (tracker, manager, target, pool) -> {

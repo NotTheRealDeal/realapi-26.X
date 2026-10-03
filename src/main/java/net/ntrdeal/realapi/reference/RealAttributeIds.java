@@ -4,12 +4,12 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.ntrdeal.realapi.RealAPI;
-import net.ntrdeal.realapi.util.RegistryUtil;
+import net.ntrdeal.realapi.util.registry.ResourceCreator;
 
 public final class RealAttributeIds {
     private RealAttributeIds(){}
 
-    private static final RegistryUtil.ResourceCreator<Attribute> CREATOR = RegistryUtil.resourceCreator(Registries.ATTRIBUTE, RealAPI::id);
+    private static final ResourceCreator<Attribute> CREATOR = ResourceCreator.of(Registries.ATTRIBUTE, RealAPI::id);
 
     public static final ResourceKey<Attribute> MOVEMENT_SCALE = CREATOR.create("movement_scale");
     public static final ResourceKey<Attribute> SHIELD_FRAGILITY = CREATOR.create("shield_fragility");

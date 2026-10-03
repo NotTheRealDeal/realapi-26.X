@@ -1,6 +1,5 @@
 package net.ntrdeal.realapi.util;
 
-
 public final class FlagUtil {
     private FlagUtil(){}
 

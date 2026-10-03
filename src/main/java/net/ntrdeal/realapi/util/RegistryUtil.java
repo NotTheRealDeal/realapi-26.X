@@ -18,6 +18,7 @@ import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.UnaryOperator;
 
+@Deprecated(forRemoval = true)
 public final class RegistryUtil {
     private RegistryUtil(){}
 

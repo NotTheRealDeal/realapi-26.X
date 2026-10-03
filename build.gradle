@@ -6,17 +6,15 @@ plugins {
 	id 'signing'
 }
 
-version = project.mod_version
-group = project.maven_group
-
-base {
-	archivesName = project.archives_base_name
-}
-
 repositories {
 	mavenLocal()
 	chenille.repositories.ladysnake()
 	chenille.repositories.modrinth()
+
+	maven {
+		name = "Jared's maven"
+		url = "https://maven.blamejared.com/"
+	}
 }
 
 loom {
@@ -37,19 +35,22 @@ dependencies {
 	//compile mods
 	compileOnly "org.ladysnake.cardinal-components-api:cardinal-components-base:${project.cca_version}"
 	compileOnly "org.ladysnake.cardinal-components-api:cardinal-components-entity:${project.cca_version}"
+	compileOnly "mezz.jei:jei-${project.minecraft_version}-fabric-api:${project.jei_version}"
 
 	//runtime mods
-	runtimeOnly "maven.modrinth:mOgUt4GM:${project.modmenu_version}"
+//	runtimeOnly "maven.modrinth:mOgUt4GM:${project.modmenu_version}"
 //	runtimeOnly "maven.modrinth:TQTTVgYE:${project.carpet_version}"
 //	runtimeOnly "maven.modrinth:l6YH9Als:${project.spark_version}"
-	runtimeOnly "maven.modrinth:AANobbMI:${project.sodium_version}"
+//	runtimeOnly "maven.modrinth:AANobbMI:${project.sodium_version}"
+//	runtimeOnly "mezz.jei:jei-${project.minecraft_version}-fabric:${project.jei_version}"
 }
 
 processResources {
-	inputs.property "version", project.version
+	def version = project.version
+	inputs.property "version", version
 
 	filesMatching("fabric.mod.json") {
-		expand "version": inputs.properties.version
+		expand "version": version
 	}
 }
 
@@ -65,10 +66,11 @@ java {
 }
 
 jar {
-	inputs.property "archivesName", project.base.archivesName
+	def projectName = project.name
+	inputs.property "projectName", projectName
 
 	from("LICENSE") {
-		rename { "${it}_${inputs.properties.archivesName}"}
+		rename { "${it}_$projectName"}
 	}
 }
 
@@ -77,10 +79,10 @@ signing {
 }
 
 mavenPublishing {
-	publishToMavenCentral(true, false)
+	publishToMavenCentral()
 	signAllPublications()
 
-	coordinates(project.group, project.archives_base_name, project.version)
+	coordinates(project.group, project.name, project.version)
 
 	pom {
 		name = "RealAPI"

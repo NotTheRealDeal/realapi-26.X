@@ -1,7 +1,9 @@
 package net.ntrdeal.realapi.client.render;
 
+import it.unimi.dsi.fastutil.floats.FloatFloatPair;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.fabricmc.fabric.api.client.rendering.v1.RenderStateDataKey;
 import net.minecraft.client.renderer.fog.FogRenderer;
 import net.minecraft.client.renderer.fog.environment.FogEnvironment;
 import org.jspecify.annotations.Nullable;
@@ -9,6 +11,8 @@ import org.jspecify.annotations.Nullable;
 @Environment(EnvType.CLIENT)
 public final class RealFogRegistry {
     private RealFogRegistry(){}
+
+    public static final RenderStateDataKey<FloatFloatPair> OVERRIDE_DISTANCE = RenderStateDataKey.create();
 
     public static void registerBeforeClass(FogEnvironment environment, @Nullable Class<? extends FogEnvironment> anchor) {
         if (anchor == null) {
